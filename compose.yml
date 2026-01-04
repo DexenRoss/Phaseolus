@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mysql:8.4
+    env_file: .env
+    environment:
+      - MYSQL_DATABASE=phaseolus
+      - MYSQL_USER=phaseolus
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - dbdata:/var/lib/mysql
+  web:
+    build:
+      context: .
+      dockerfile: ./.docker/web/Dockerfile
+    env_file: .env
+    ports:
+      - ${NEXT_PORT}:3000
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+      - /app/node_modules
+
+volumes:
+  dbdata:
