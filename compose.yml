@@ -22,7 +22,9 @@ services:
       - type: bind
         source: .
         target: /app
+      - web_node_modules:/app/node_modules
       - /app/node_modules
 
 volumes:
   dbdata:
+  web_node_modules:
