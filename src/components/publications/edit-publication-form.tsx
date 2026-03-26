@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type AuthorOption = {
@@ -57,6 +57,8 @@ function formatDateForInput(dateValue: Date | string | null) {
 }
 
 export default function EditPublicationForm({ publication, authors }: Props) {
+  const router = useRouter();
+
   const [title, setTitle] = useState(publication.title);
   const [slug, setSlug] = useState(publication.slug);
   const [abstract, setAbstract] = useState(publication.abstract ?? "");
@@ -115,8 +117,9 @@ export default function EditPublicationForm({ publication, authors }: Props) {
         setError(data.error || "No se pudo actualizar la publicación");
         return;
       }
-
-      setSuccess("Publicación actualizada correctamente");
+      setSuccess("Publicación actualizada exitosamente");
+      router.push("/dashboard/publications");
+      router.refresh();
     } catch {
       setError("Ocurrió un error inesperado");
     } finally {
