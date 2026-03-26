@@ -23,6 +23,7 @@ export default async function DashboardLayout({
   ];
 
   const collaboratorItems = [
+    { href: "/dashboard/authors", label: "Authors" },
     { href: "/dashboard/publications", label: "Publications" },
     { href: "/dashboard/datasets", label: "Datasets" },
   ];
