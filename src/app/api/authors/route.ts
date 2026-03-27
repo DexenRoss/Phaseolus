@@ -1,18 +1,14 @@
 import { NextResponse } from "next/server";
-import { getCurrentSession } from "@/lib/auth";
+import {
+  AuthorizationError,
+  requireRequestPermission,
+} from "@/lib/authorization";
 import { createAuthor } from "@/server/services/author.service";
 
 export async function POST(req: Request) {
-  const session = await getCurrentSession();
-
-  if (
-    !session ||
-    (session.role !== "ADMIN" && session.role !== "COLLABORATOR")
-  ) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 403 });
-  }
-
   try {
+    await requireRequestPermission("author:create");
+
     const { fullName, orcid, affiliation, email } = await req.json();
 
     if (!fullName) {
@@ -31,7 +27,15 @@ export async function POST(req: Request) {
 
     return NextResponse.json(author);
   } catch (error) {
+    if (error instanceof AuthorizationError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status }
+      );
+    }
+
     console.error(error);
+
     return NextResponse.json(
       { error: "Error al crear autor" },
       { status: 500 }

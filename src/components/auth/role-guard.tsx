@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentSession } from "@/lib/auth";
-import { hasRequiredRole, AppRole } from "@/lib/permissions";
+import { hasRequiredRole, AppRole, isAppRole } from "@/lib/permissions";
 
 type RoleGuardProps = {
   allowedRoles: AppRole[];
@@ -17,10 +17,14 @@ export default async function RoleGuard({
     redirect("/login");
   }
 
-  const isAllowed = hasRequiredRole(session.role as AppRole, allowedRoles);
+  if (!isAppRole(session.role)) {
+    redirect("/forbidden");
+  }
+
+  const isAllowed = hasRequiredRole(session.role, allowedRoles);
 
   if (!isAllowed) {
-    redirect("/dashboard");
+    redirect("/forbidden");
   }
 
   return <>{children}</>;

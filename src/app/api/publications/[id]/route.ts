@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { getCurrentSession } from "@/lib/auth";
+import {
+  AuthorizationError,
+  requireRequestPermission,
+} from "@/lib/authorization";
 import {
   getPublicationById,
   updatePublication,
@@ -26,39 +29,56 @@ export async function GET(_: Request, context: Context) {
 }
 
 export async function PUT(req: Request, context: Context) {
-  const session = await getCurrentSession();
+  try {
+    await requireRequestPermission("publication:update");
 
-  if (
-    !session ||
-    (session.role !== "ADMIN" && session.role !== "COLLABORATOR")
-  ) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 403 });
+    const { id } = await context.params;
+    const body = await req.json();
+
+    const updated = await updatePublication({
+      id,
+      ...body,
+    });
+
+    return NextResponse.json(updated);
+  } catch (error) {
+    if (error instanceof AuthorizationError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status }
+      );
+    }
+
+    console.error(error);
+
+    return NextResponse.json(
+      { error: "Error al actualizar la publicación" },
+      { status: 500 }
+    );
   }
-
-  const { id } = await context.params;
-  const body = await req.json();
-
-  const updated = await updatePublication({
-    id,
-    ...body,
-  });
-
-  return NextResponse.json(updated);
 }
 
 export async function DELETE(_: Request, context: Context) {
-  const session = await getCurrentSession();
+  try {
+    await requireRequestPermission("publication:delete");
 
-  if (
-    !session ||
-    (session.role !== "ADMIN" && session.role !== "COLLABORATOR")
-  ) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 403 });
+    const { id } = await context.params;
+    await deletePublication(id);
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    if (error instanceof AuthorizationError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status }
+      );
+    }
+
+    console.error(error);
+
+    return NextResponse.json(
+      { error: "Error al eliminar la publicación" },
+      { status: 500 }
+    );
   }
-
-  const { id } = await context.params;
-
-  await deletePublication(id);
-
-  return NextResponse.json({ success: true });
 }
