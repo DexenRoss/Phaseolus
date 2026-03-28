@@ -52,124 +52,69 @@ export default function CreateAuthorForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: "grid",
-        gap: "16px",
-        background: "#ffffff",
-        borderRadius: "16px",
-        padding: "24px",
-        boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
-      }}
-    >
-      <h2 style={{ margin: 0 }}>Crear autor</h2>
+    <form onSubmit={handleSubmit} className="grid gap-4 rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-5">
+      <h3 className="text-lg font-semibold">Crear autor</h3>
 
-      <div style={{ display: "grid", gap: "8px" }}>
-        <label htmlFor="fullName">Nombre completo</label>
+      <div className="grid gap-2">
+        <label htmlFor="fullName" className="text-sm font-medium">Nombre completo</label>
         <input
           id="fullName"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           required
-          style={{
-            padding: "12px",
-            borderRadius: "10px",
-            border: "1px solid #d1d5db",
-          }}
+          className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
         />
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-          gap: "16px",
-        }}
-      >
-        <div style={{ display: "grid", gap: "8px" }}>
-          <label htmlFor="orcid">ORCID</label>
+      <div className="grid gap-2 md:grid-cols-3">
+        <div className="grid gap-2">
+          <label htmlFor="orcid" className="text-sm font-medium">ORCID</label>
           <input
             id="orcid"
             value={orcid}
             onChange={(e) => setOrcid(e.target.value)}
             placeholder="0000-0000-0000-0000"
-            style={{
-              padding: "12px",
-              borderRadius: "10px",
-              border: "1px solid #d1d5db",
-            }}
+            className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
           />
         </div>
 
-        <div style={{ display: "grid", gap: "8px" }}>
-          <label htmlFor="affiliation">Afiliación</label>
+        <div className="grid gap-2">
+          <label htmlFor="affiliation" className="text-sm font-medium">Afiliación</label>
           <input
             id="affiliation"
             value={affiliation}
             onChange={(e) => setAffiliation(e.target.value)}
-            style={{
-              padding: "12px",
-              borderRadius: "10px",
-              border: "1px solid #d1d5db",
-            }}
+            className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
           />
         </div>
 
-        <div style={{ display: "grid", gap: "8px" }}>
-          <label htmlFor="email">Email</label>
+        <div className="grid gap-2">
+          <label htmlFor="email" className="text-sm font-medium">Email</label>
           <input
             id="email"
-            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{
-              padding: "12px",
-              borderRadius: "10px",
-              border: "1px solid #d1d5db",
-            }}
+            className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
           />
         </div>
       </div>
 
-      {error && (
-        <div
-          style={{
-            padding: "12px",
-            borderRadius: "10px",
-            background: "#fef2f2",
-            color: "#b91c1c",
-          }}
-        >
+      {error ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </div>
-      )}
+      ) : null}
 
-      {success && (
-        <div
-          style={{
-            padding: "12px",
-            borderRadius: "10px",
-            background: "#ecfdf5",
-            color: "#047857",
-          }}
-        >
+      {success ? (
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
           {success}
         </div>
-      )}
+      ) : null}
 
       <button
         type="submit"
         disabled={loading}
-        style={{
-          padding: "12px 16px",
-          borderRadius: "10px",
-          border: "none",
-          background: loading ? "#9ca3af" : "#111827",
-          color: "#ffffff",
-          fontWeight: 600,
-          cursor: loading ? "not-allowed" : "pointer",
-        }}
+        className="inline-flex w-fit rounded-xl bg-[var(--accent-strong)] px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? "Creando..." : "Crear autor"}
       </button>

@@ -95,6 +95,7 @@ export default function CreatePublicationForm({ authors }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
+      className="grid gap-4 rounded-2x1 border border-[var(--border)] bg-[var(--panel)] p5"
       style={{
         display: "grid",
         gap: "16px",
@@ -118,6 +119,7 @@ export default function CreatePublicationForm({ authors }: Props) {
               setSlug(slugify(value));
             }
           }}
+          className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
           required
           style={{
             padding: "12px",
@@ -133,6 +135,7 @@ export default function CreatePublicationForm({ authors }: Props) {
           id="slug"
           value={slug}
           onChange={(e) => setSlug(slugify(e.target.value))}
+          className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
           required
           style={{
             padding: "12px",
@@ -148,6 +151,7 @@ export default function CreatePublicationForm({ authors }: Props) {
           id="abstract"
           value={abstract}
           onChange={(e) => setAbstract(e.target.value)}
+          className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
           rows={4}
           style={{
             padding: "12px",
@@ -171,6 +175,7 @@ export default function CreatePublicationForm({ authors }: Props) {
             id="journal"
             value={journal}
             onChange={(e) => setJournal(e.target.value)}
+            className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
             style={{
               padding: "12px",
               borderRadius: "10px",
@@ -185,6 +190,7 @@ export default function CreatePublicationForm({ authors }: Props) {
             id="doi"
             value={doi}
             onChange={(e) => setDoi(e.target.value)}
+            className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
             style={{
               padding: "12px",
               borderRadius: "10px",
@@ -200,6 +206,7 @@ export default function CreatePublicationForm({ authors }: Props) {
             type="date"
             value={publicationDate}
             onChange={(e) => setPublicationDate(e.target.value)}
+            className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
             style={{
               padding: "12px",
               borderRadius: "10px",
@@ -215,6 +222,7 @@ export default function CreatePublicationForm({ authors }: Props) {
           id="status"
           value={status}
           onChange={(e) => setStatus(e.target.value)}
+          className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
           style={{
             padding: "12px",
             borderRadius: "10px",
@@ -268,6 +276,7 @@ export default function CreatePublicationForm({ authors }: Props) {
                   onChange={(e) =>
                     handleAuthorChange(author.id, e.target.checked)
                   }
+                  className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--accent-strong)]"
                 />
                 <span>
                   {author.fullName}
@@ -307,6 +316,7 @@ export default function CreatePublicationForm({ authors }: Props) {
 
       <button
         type="submit"
+        className="inline-flex w-fit rounded-xl bg-[var(--accent-strong)] px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         disabled={loading}
         style={{
           padding: "12px 16px",

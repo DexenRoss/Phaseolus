@@ -1,14 +1,17 @@
-import { requirePermission } from "@/lib/authorization";
+import RoleGuard from "@/components/auth/role-guard";
+import SectionCard from "@/components/ui/section-card";
 
-export default async function AuditPage() {
-  await requirePermission("audit:read");
-
+export default function AuditPage() {
   return (
-    <section style={{ display: "grid", gap: "16px" }}>
-      <div>
-        <h1>Audit Log</h1>
-        <p>Módulo de auditoría en construcción.</p>
-      </div>
-    </section>
+    <RoleGuard allowedRoles={["ADMIN"]}>
+      <SectionCard
+        title="Audit Log"
+        description="Trazabilidad global y actividad administrativa del sistema."
+      >
+        <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--panel)] p-6 text-sm text-[var(--muted-foreground)]">
+          Módulo de auditoría en construcción.
+        </div>
+      </SectionCard>
+    </RoleGuard>
   );
 }

@@ -1,14 +1,17 @@
-import { requirePermission } from "@/lib/authorization";
+import RoleGuard from "@/components/auth/role-guard";
+import SectionCard from "@/components/ui/section-card";
 
-export default async function InvitationsPage() {
-  await requirePermission("invitation:read");
-
+export default function InvitationsPage() {
   return (
-    <section style={{ display: "grid", gap: "16px" }}>
-      <div>
-        <h1>Invitations</h1>
-        <p>Módulo de invitaciones en construcción.</p>
-      </div>
-    </section>
+    <RoleGuard allowedRoles={["ADMIN"]}>
+      <SectionCard
+        title="Invitations"
+        description="Control de invitaciones para nuevos colaboradores."
+      >
+        <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--panel)] p-6 text-sm text-[var(--muted-foreground)]">
+          Módulo de invitaciones en construcción.
+        </div>
+      </SectionCard>
+    </RoleGuard>
   );
 }
