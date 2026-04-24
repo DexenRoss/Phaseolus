@@ -1,14 +1,23 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function CollaboratorRegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background text-foreground" />}>
+      <CollaboratorRegisterContent />
+    </Suspense>
+  );
+}
+
+function CollaboratorRegisterContent() {
   const sp = useSearchParams();
   const router = useRouter();
 
   const email = (sp.get("email") || "").toLowerCase();
   const token = sp.get("token") || "";
+  const invalidLink = !email || !token;
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,16 +27,23 @@ export default function CollaboratorRegisterPage() {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
-  const invalidLink = useMemo(() => !email || !token, [email, token]);
+  if (invalidLink) {
+    return (
+      <main className="min-h-screen bg-background text-foreground p-6">
+        <div className="mx-auto max-w-xl rounded-2xl border border-border bg-muted p-6 md:p-10">
+          <h1 className="text-2xl font-extrabold text-red-600">Acceso denegado</h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Solo puedes acceder a esta página desde el enlace de invitación enviado por correo.
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMsg(null);
 
-    if (invalidLink) {
-      setMsg("Link inválido. Revisa el correo de invitación.");
-      return;
-    }
     if (!firstName || !lastName || !password) {
       setMsg("Completa todos los campos.");
       return;
@@ -56,8 +72,8 @@ export default function CollaboratorRegisterPage() {
 
       // redirige a “revisa tu correo”
       router.push(`/register/check-email?email=${encodeURIComponent(email)}`);
-    } catch (err: any) {
-      setMsg(err.message || "Error");
+    } catch (err: unknown) {
+      setMsg(err instanceof Error ? err.message : "Error");
     } finally {
       setLoading(false);
     }
@@ -90,13 +106,6 @@ export default function CollaboratorRegisterPage() {
                 Registro exclusivo para colaboradores.
               </p>
             </div>
-
-            {invalidLink && (
-              <div className="mt-4 rounded-lg border border-border bg-background px-3 py-2 text-sm">
-                Link inválido. Abre el link del correo de invitación.
-              </div>
-            )}
-
             <form onSubmit={onSubmit} className="mt-6 space-y-4">
               <div className="grid gap-3 md:grid-cols-2">
                 <Field label="Nombre">

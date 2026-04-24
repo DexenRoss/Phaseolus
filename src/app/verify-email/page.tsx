@@ -1,9 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-background text-foreground p-6" />}>
+      <VerifyEmailContent />
+    </Suspense>
+  );
+}
+
+function VerifyEmailContent() {
   const sp = useSearchParams();
   const token = sp.get("token") || "";
 
@@ -26,9 +35,9 @@ export default function VerifyEmailPage() {
 
         setStatus("ok");
         setMessage("Correo confirmado ✅ Tu cuenta ya está activa.");
-      } catch (e: any) {
+      } catch (e: unknown) {
         setStatus("error");
-        setMessage(e.message || "Link inválido o expirado.");
+        setMessage(e instanceof Error ? e.message : "Link inválido o expirado.");
       }
     }
     run();
@@ -41,12 +50,12 @@ export default function VerifyEmailPage() {
         {status !== "loading" && <div className="text-lg font-semibold">{message}</div>}
 
         {status === "ok" && (
-          <a
+          <Link
             href="/"
             className="mt-6 inline-flex rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
           >
             Ir al inicio
-          </a>
+          </Link>
         )}
       </div>
     </main>

@@ -65,8 +65,13 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: "Error enviando invitación" }, { status: 500 });
+  } catch (err: unknown) {
+    // Imprime el error completo en consola
+    console.error("[INVITE ERROR]", JSON.stringify(err, Object.getOwnPropertyNames(err), 2));
+    let errorMsg = "Error enviando invitación";
+    if (err instanceof Error && err.message) errorMsg += ": " + err.message;
+    if (err instanceof Error && err.stack) errorMsg += "\n" + err.stack;
+    errorMsg += "\n" + JSON.stringify(err, Object.getOwnPropertyNames(err), 2);
+    return NextResponse.json({ error: errorMsg }, { status: 500 });
   }
 }

@@ -21,10 +21,21 @@ export default function InviteCollaboratorPage() {
         body: JSON.stringify({ email }),
       });
 
-      const data = await res.json().catch(() => ({}));
+      let data;
+      try {
+        data = await res.json();
+      } catch (e: unknown) {
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        data = { error: `Error inesperado: ${errorMessage}` };
+      }
 
       if (!res.ok) {
-        setMsg({ type: "err", text: data?.error || "Error" });
+        setMsg({
+          type: "err",
+          text:
+            (data?.error ? `Error: ${data.error}` : "Error desconocido") +
+            (data?.stack ? `\nStack: ${data.stack}` : ""),
+        });
         return;
       }
 

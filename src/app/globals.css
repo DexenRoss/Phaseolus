@@ -28,6 +28,16 @@
     --ring: 270 95% 60%;
   }
 
+  .dark {
+    --background: 0 0% 16%; /* #2A2828 */
+    --foreground: 0 0% 100%; /* blanco */
+    --secondary: 0 0% 20%; /* #343333 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 31%; /* #505050 */
+    --muted-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+  }
+
   body {
     @apply bg-background text-foreground;
   }

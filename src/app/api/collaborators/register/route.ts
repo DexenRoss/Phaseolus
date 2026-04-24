@@ -93,9 +93,9 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch (e: any) {
+  } catch (e: unknown) {
     // Email duplicado (por unique)
-    if (String(e?.code) === "P2002") {
+    if (typeof e === "object" && e !== null && "code" in e && String(e.code) === "P2002") {
       return NextResponse.json({ error: "Email ya registrado" }, { status: 409 });
     }
     console.error(e);
