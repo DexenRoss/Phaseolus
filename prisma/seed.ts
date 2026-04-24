@@ -1,19 +1,6 @@
 import bcrypt from "bcrypt";
-import { PrismaClient, UserRole, UserStatus } from "../src/generated/prisma/client";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-
-const adapter = new PrismaMariaDb({
-  host: "127.0.0.1",
-  port: 3306,
-  user: "phaseolus_user",
-  password: "phaseolus_pass",
-  database: "phaseolus",
-  allowPublicKeyRetrieval: true,
-});
-
-const prisma = new PrismaClient({
-  adapter,
-});
+import { UserRole, UserStatus } from "../src/generated/prisma/client";
+import { prisma } from "../src/lib/prisma";
 
 async function main() {
   console.log("🌱 Iniciando seed...");

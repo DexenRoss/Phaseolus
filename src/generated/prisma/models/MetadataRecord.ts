@@ -193,7 +193,7 @@ export type MetadataRecordGroupByOutputType = {
   _max: MetadataRecordMaxAggregateOutputType | null
 }
 
-type GetMetadataRecordGroupByPayload<T extends MetadataRecordGroupByArgs> = Prisma.PrismaPromise<
+export type GetMetadataRecordGroupByPayload<T extends MetadataRecordGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MetadataRecordGroupByOutputType, T['by']> &
       {

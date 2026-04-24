@@ -214,7 +214,7 @@ export type DatasetGroupByOutputType = {
   _max: DatasetMaxAggregateOutputType | null
 }
 
-type GetDatasetGroupByPayload<T extends DatasetGroupByArgs> = Prisma.PrismaPromise<
+export type GetDatasetGroupByPayload<T extends DatasetGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<DatasetGroupByOutputType, T['by']> &
       {

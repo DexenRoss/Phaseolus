@@ -1,17 +1,18 @@
 services:
-  mysql:
+  db:
     image: mysql:8.4
+    env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: phaseolus
-      MYSQL_USER: phaseolus_user
-      MYSQL_PASSWORD: phaseolus_pass
+      MYSQL_USER: phaseolus
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - ${MYSQL_PORT:-3306}:3306
     volumes:
-      - phaseolus_mysql_data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -23,7 +24,7 @@ services:
     ports:
       - ${NEXT_PORT:-3000}:3000
     depends_on:
-      mysql:
+      db:
         condition: service_healthy
     volumes:
       - type: bind
@@ -33,5 +34,5 @@ services:
       - /app/node_modules
 
 volumes:
-  phaseolus_mysql_data:
+  dbdata:
   web_node_modules:

@@ -172,7 +172,7 @@ export type AuthorGroupByOutputType = {
   _max: AuthorMaxAggregateOutputType | null
 }
 
-type GetAuthorGroupByPayload<T extends AuthorGroupByArgs> = Prisma.PrismaPromise<
+export type GetAuthorGroupByPayload<T extends AuthorGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<AuthorGroupByOutputType, T['by']> &
       {

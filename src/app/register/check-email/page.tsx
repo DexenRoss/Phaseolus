@@ -1,9 +1,9 @@
-export default function CheckEmailPage({
+export default async function CheckEmailPage({
   searchParams,
 }: {
-  searchParams: { email?: string };
+  searchParams: Promise<{ email?: string }>;
 }) {
-  const email = searchParams?.email || "";
+  const { email = "" } = await searchParams;
 
   return (
     <main className="min-h-screen bg-background text-foreground p-6">

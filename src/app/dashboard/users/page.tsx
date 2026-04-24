@@ -1,6 +1,8 @@
 import RoleGuard from "@/components/auth/role-guard";
 import { getAllUsers } from "@/server/services/user.service";
 
+type UserRow = Awaited<ReturnType<typeof getAllUsers>>[number];
+
 export default async function UsersPage() {
   const users = await getAllUsers();
 
@@ -51,7 +53,7 @@ export default async function UsersPage() {
             </thead>
 
             <tbody>
-              {users.map((user) => (
+              {users.map((user: UserRow) => (
                 <tr
                   key={user.id}
                   style={{ borderBottom: "1px solid #f1f5f9" }}

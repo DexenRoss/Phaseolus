@@ -51,35 +51,34 @@ export async function POST(req: Request) {
     const from = process.env.SMTP_FROM || process.env.SMTP_USER || "no-reply@example.com";
     const transporter = getTransporter();
 
-    await prisma.$transaction(async (tx) => {
-      const user = await tx.user.create({
-        data: {
-          name: `${firstName} ${lastName}`.trim(),
-          email,
-          passwordHash,
-          role: UserRole.COLLABORATOR,
-          status: UserStatus.PENDING_VERIFICATION,
-        },
-        select: { id: true, email: true },
-      });
+    const user = await prisma.user.create({
+      data: {
+        name: `${firstName} ${lastName}`.trim(),
+        email,
+        passwordHash,
+        role: UserRole.COLLABORATOR,
+        status: UserStatus.PENDING_VERIFICATION,
+      },
+      select: { id: true, email: true },
+    });
 
-      await tx.invitation.update({
+    await prisma.$transaction([
+      prisma.invitation.update({
         where: { id: invite.id },
         data: {
           status: InvitationStatus.ACCEPTED,
           acceptedAt: new Date(),
           acceptedById: user.id,
         },
-      });
-
-      await tx.emailVerificationToken.create({
+      }),
+      prisma.emailVerificationToken.create({
         data: {
           email: user.email,
           token: verifyToken,
           expiresAt: verifyExpiresAt,
         },
-      });
-    });
+      }),
+    ]);
 
     await transporter.sendMail({
       from,

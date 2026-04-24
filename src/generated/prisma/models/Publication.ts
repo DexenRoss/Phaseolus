@@ -200,7 +200,7 @@ export type PublicationGroupByOutputType = {
   _max: PublicationMaxAggregateOutputType | null
 }
 
-type GetPublicationGroupByPayload<T extends PublicationGroupByArgs> = Prisma.PrismaPromise<
+export type GetPublicationGroupByPayload<T extends PublicationGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PublicationGroupByOutputType, T['by']> &
       {

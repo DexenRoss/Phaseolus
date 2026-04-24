@@ -158,7 +158,7 @@ export type EmailVerificationTokenGroupByOutputType = {
   _max: EmailVerificationTokenMaxAggregateOutputType | null
 }
 
-type GetEmailVerificationTokenGroupByPayload<T extends EmailVerificationTokenGroupByArgs> = Prisma.PrismaPromise<
+export type GetEmailVerificationTokenGroupByPayload<T extends EmailVerificationTokenGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<EmailVerificationTokenGroupByOutputType, T['by']> &
       {
