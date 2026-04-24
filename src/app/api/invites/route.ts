@@ -1,20 +1,21 @@
 import { NextResponse } from "next/server";
-import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
+import { getCurrentSession } from "@/lib/auth";
 import { getTransporter, inviteEmailHtml } from "@/lib/mailer";
-import { Role } from "@prisma/client";
-
-function sha256hex(input: string) {
-  return crypto.createHash("sha256").update(input).digest("hex");
-}
-
-function tokenBase64Url(bytes = 32) {
-  // Node 20: base64url disponible
-  return crypto.randomBytes(bytes).toString("base64url");
-}
+import { randomTokenBase64Url } from "@/lib/tokens";
+import { InvitationStatus, UserRole } from "@/generated/prisma/client";
 
 export async function POST(req: Request) {
   try {
+    const session = await getCurrentSession();
+    if (!session) {
+      return NextResponse.json({ error: "No autenticado" }, { status: 401 });
+    }
+
+    if (session.role !== "ADMIN") {
+      return NextResponse.json({ error: "No autorizado" }, { status: 403 });
+    }
+
     const body = await req.json();
     const email = String(body?.email || "").trim().toLowerCase();
 
@@ -28,24 +29,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Ese correo ya tiene cuenta" }, { status: 409 });
     }
 
-    // Invalida invitaciones activas anteriores (no usadas)
-    await prisma.collaboratorInvite.updateMany({
-      where: { email, usedAt: null },
-      data: { usedAt: new Date() }, // las marcamos como usadas/invalidas
+    await prisma.invitation.updateMany({
+      where: { email, status: InvitationStatus.PENDING },
+      data: { status: InvitationStatus.REVOKED },
     });
 
-    const rawToken = tokenBase64Url(32);
-    const tokenHash = sha256hex(rawToken);
+    const rawToken = randomTokenBase64Url(32);
 
     const expiresHours = Number(process.env.INVITE_EXPIRES_HOURS || "48");
     const expiresAt = new Date(Date.now() + expiresHours * 60 * 60 * 1000);
 
-    await prisma.collaboratorInvite.create({
+    await prisma.invitation.create({
       data: {
         email,
-        tokenHash,
+        token: rawToken,
         expiresAt,
-        role: Role.COLLABORATOR,
+        role: UserRole.COLLABORATOR,
+        status: InvitationStatus.PENDING,
+        invitedById: session.sub,
       },
     });
 

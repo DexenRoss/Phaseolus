@@ -1,73 +1,220 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  COLLABORATOR
+enum UserRole {
   ADMIN
+  COLLABORATOR
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  INVITED
+  DISABLED
+  PENDING_VERIFICATION
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  REVOKED
+}
+
+enum PublicationStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum DatasetStatus {
+  DRAFT
+  READY
+  ARCHIVED
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  INVITE_SENT
+  INVITE_ACCEPTED
+  ROLE_CHANGED
 }
 
 model User {
-  id           BigInt @id @default(autoincrement()) @db.UnsignedBigInt
-  firstName    String @map("first_name") @db.VarChar(60)
-  lastName     String @map("last_name") @db.VarChar(60)
-  email        String @unique @db.VarChar(150)
-  passwordHash String @map("password_hash") @db.VarChar(255)
+  id              String           @id @default(cuid())
+  name            String?
+  email           String           @unique
+  username        String?          @unique
+  passwordHash    String?
+  role            UserRole         @default(USER)
+  status          UserStatus       @default(PENDING_VERIFICATION)
+  emailVerifiedAt DateTime?
+  imageUrl        String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
-  role Role @default(USER)
-
-  organization String? @db.VarChar(120)
-  isActive     Boolean @default(true) @map("is_active")
-
-  createdAt       DateTime  @default(now()) @map("created_at")
-  updatedAt       DateTime  @updatedAt @map("updated_at")
-  emailVerifiedAt DateTime? @map("email_verified_at")
-
-  emailVerificationTokens EmailVerificationToken[]
-
-  @@index([role])
-  @@index([isActive])
-  @@map("users")
+  sentInvitations Invitation[]     @relation("InvitationSender")
+  acceptedInvites Invitation[]     @relation("InvitationAcceptor")
+  publications    Publication[]    @relation("PublicationCreatedBy")
+  datasets        Dataset[]        @relation("DatasetCreatedBy")
+  metadataRecords MetadataRecord[] @relation("MetadataCreatedBy")
+  auditLogs       AuditLog[]       @relation("AuditActor")
 }
 
-model CollaboratorInvite {
-  id    String @id @default(cuid())
-  email String @db.VarChar(150)
+model Invitation {
+  id           String           @id @default(cuid())
+  email        String
+  role         UserRole         @default(COLLABORATOR)
+  token        String           @unique
+  status       InvitationStatus @default(PENDING)
+  expiresAt    DateTime
+  acceptedAt   DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 
-  // Guardamos HASH del token (seguridad). El token real solo vive en el link del correo.
-  tokenHash String @unique @db.VarChar(64)
+  invitedById  String
+  invitedBy    User             @relation("InvitationSender", fields: [invitedById], references: [id])
 
-  expiresAt DateTime
-  usedAt    DateTime?
-
-  role Role @default(COLLABORATOR)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  acceptedById String?
+  acceptedBy   User?            @relation("InvitationAcceptor", fields: [acceptedById], references: [id])
 
   @@index([email])
-  @@index([expiresAt])
-  @@map("collaborator_invites")
+  @@index([status])
 }
 
 model EmailVerificationToken {
-  id        String    @id @default(cuid())
-  userId    BigInt    @db.UnsignedBigInt
-  tokenHash String    @unique @db.VarChar(64)
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
   expiresAt DateTime
-  usedAt    DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([email])
+}
 
-  @@index([userId])
-  @@index([expiresAt])
-  @@map("email_verification_tokens")
+model Publication {
+  id              String            @id @default(cuid())
+  title           String
+  slug            String            @unique
+  abstract        String?           @db.Text
+  journal         String?
+  doi             String?           @unique
+  publicationDate DateTime?
+  status          PublicationStatus @default(DRAFT)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  createdById     String
+  createdBy       User              @relation("PublicationCreatedBy", fields: [createdById], references: [id])
+
+  authors         PublicationAuthor[]
+  metadataRecords MetadataRecord[]
+  datasets        Dataset[]
+
+  @@index([title])
+  @@index([status])
+}
+
+model Author {
+  id           String   @id @default(cuid())
+  fullName     String
+  orcid        String?  @unique
+  affiliation  String?
+  email        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  publications PublicationAuthor[]
+
+  @@index([fullName])
+}
+
+model PublicationAuthor {
+  id              String      @id @default(cuid())
+  publicationId   String
+  authorId        String
+  authorOrder     Int
+  isCorresponding Boolean     @default(false)
+
+  publication     Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  author          Author      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@unique([publicationId, authorId])
+  @@unique([publicationId, authorOrder])
+  @@index([authorId])
+}
+
+model MetadataRecord {
+  id            String       @id @default(cuid())
+  entityType    String
+  entityId      String
+  key           String
+  value         String       @db.Text
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  createdById   String
+  createdBy     User         @relation("MetadataCreatedBy", fields: [createdById], references: [id])
+
+  publicationId String?
+  publication   Publication? @relation(fields: [publicationId], references: [id])
+
+  datasetId     String?
+  dataset       Dataset?     @relation(fields: [datasetId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([key])
+}
+
+model Dataset {
+  id              String        @id @default(cuid())
+  name            String
+  slug            String        @unique
+  description     String?       @db.Text
+  sourceType      String?
+  filePath        String?
+  storageProvider String?
+  status          DatasetStatus @default(DRAFT)
+  isPublished     Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  createdById     String
+  createdBy       User          @relation("DatasetCreatedBy", fields: [createdById], references: [id])
+
+  publicationId   String?
+  publication     Publication?  @relation(fields: [publicationId], references: [id])
+
+  metadataRecords MetadataRecord[]
+
+  @@index([name])
+  @@index([status])
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  action      AuditAction
+  entityType  String
+  entityId    String?
+  description String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+
+  actorId     String?
+  actor       User?       @relation("AuditActor", fields: [actorId], references: [id])
+
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([createdAt])
 }

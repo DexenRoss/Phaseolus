@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sha256hex } from "@/lib/tokens";
+import { UserStatus } from "@/generated/prisma/client";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -10,28 +10,24 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: false, error: "Token inválido" }, { status: 400 });
   }
 
-  const tokenHash = sha256hex(token);
-
-  const record = await prisma.emailVerificationToken.findFirst({
-    where: {
-      tokenHash,
-      usedAt: null,
-      expiresAt: { gt: new Date() },
-    },
+  const record = await prisma.emailVerificationToken.findUnique({
+    where: { token },
   });
 
-  if (!record) {
+  if (!record || record.expiresAt <= new Date()) {
     return NextResponse.json({ ok: false, error: "Link inválido o expirado" }, { status: 400 });
   }
 
   await prisma.$transaction([
-    prisma.user.update({
-      where: { id: record.userId },
-      data: { emailVerifiedAt: new Date() },
+    prisma.user.updateMany({
+      where: { email: record.email },
+      data: {
+        emailVerifiedAt: new Date(),
+        status: UserStatus.ACTIVE,
+      },
     }),
-    prisma.emailVerificationToken.update({
+    prisma.emailVerificationToken.delete({
       where: { id: record.id },
-      data: { usedAt: new Date() },
     }),
   ]);
 

@@ -2,34 +2,7 @@
   "name": "phaseolus",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "@prisma/client": "^6.19.1",
-    "bcryptjs": "^3.0.3",
-    "next": "^16.0.8",
-    "nodemailer": "^7.0.12",
-    "react": "^19.2.1",
-    "react-dom": "19.2.1"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/nodemailer": "^7.0.4",
-    "@types/react": "^19.2.10",
-    "@types/react-dom": "^19.2.3",
-    "autoprefixer": "^10.4.23",
-    "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^9",
-    "eslint-config-next": "16.0.8",
-    "postcss": "^8.5.6",
-    "prisma": "^6.19.1",
-    "tailwindcss": "^3.4.19",
-    "typescript": "5.9.3"
-  },
+  "type": "module",
   "description": "Web page to get differential expression graphs from Phaseoulus gen.",
   "main": "tailwind.config.js",
   "repository": {
@@ -39,9 +12,46 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/DexenRoss/Phaseolus/issues"
   },
-  "homepage": "https://github.com/DexenRoss/Phaseolus#readme"
+  "homepage": "https://github.com/DexenRoss/Phaseolus#readme",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@prisma/adapter-mariadb": "^7.5.0",
+    "@prisma/client": "^7.5.0",
+    "bcrypt": "^6.0.0",
+    "jose": "^6.2.2",
+    "mariadb": "^3.5.2",
+    "mysql2": "^3.20.0",
+    "next": "16.0.8",
+    "nodemailer": "^7.0.12",
+    "prisma": "^7.5.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^6.0.0",
+    "@types/node": "^20",
+    "@types/nodemailer": "^7.0.4",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.27",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.8",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.21.0",
+    "typescript": "5.9.3"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
 }

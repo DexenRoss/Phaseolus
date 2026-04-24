@@ -1,9 +1,15 @@
-"use client";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
+      <header className="flex items-center justify-between border-b border-border bg-card px-6 py-4 shadow-sm">
+        <span className="text-xl font-semibold">UNAM</span>
+        <Link href="/login" className="text-sm font-semibold text-primary hover:underline">
+          Iniciar sesión
+        </Link>
+      </header>
+
       <main className="mx-auto flex min-h-[80vh] w-full max-w-5xl flex-col gap-16 px-6 py-16 text-foreground">
         <section className="space-y-6">
           <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">Phaseolus</h1>

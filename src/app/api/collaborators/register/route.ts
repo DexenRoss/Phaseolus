@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
-import { randomTokenBase64Url, sha256hex } from "@/lib/tokens";
+import { randomTokenBase64Url } from "@/lib/tokens";
 import { getTransporter, verifyEmailHtml } from "@/lib/mailer";
-import { Role } from "@prisma/client";
+import { InvitationStatus, UserRole, UserStatus } from "@/generated/prisma/client";
 
 export async function POST(req: Request) {
   try {
@@ -20,12 +20,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Faltan campos" }, { status: 400 });
     }
 
-    // 1) Validar invitación (token hasheado + no usado + no expirado)
-    const invite = await prisma.collaboratorInvite.findFirst({
+    const invite = await prisma.invitation.findFirst({
       where: {
         email,
-        tokenHash: sha256hex(inviteToken),
-        usedAt: null,
+        token: inviteToken,
+        status: InvitationStatus.PENDING,
         expiresAt: { gt: new Date() },
       },
     });
@@ -40,12 +39,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Ese correo ya tiene cuenta" }, { status: 409 });
     }
 
-    // 3) Crear usuario colaborador + marcar invite usada + crear token confirmación
     const passwordHash = await bcrypt.hash(password, 10);
 
     const verifyToken = randomTokenBase64Url(32);
-    const verifyHash = sha256hex(verifyToken);
-
     const verifyHours = Number(process.env.EMAIL_VERIFY_EXPIRES_HOURS || "24");
     const verifyExpiresAt = new Date(Date.now() + verifyHours * 60 * 60 * 1000);
 
@@ -58,32 +54,33 @@ export async function POST(req: Request) {
     await prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
-          firstName,
-          lastName,
+          name: `${firstName} ${lastName}`.trim(),
           email,
           passwordHash,
-          role: Role.COLLABORATOR,
-          organization: invite.role ? "Default" : null, // ajusta si guardas org en invite
-          isActive: true,
+          role: UserRole.COLLABORATOR,
+          status: UserStatus.PENDING_VERIFICATION,
         },
-        select: { id: true },
+        select: { id: true, email: true },
       });
 
-      await tx.collaboratorInvite.update({
+      await tx.invitation.update({
         where: { id: invite.id },
-        data: { usedAt: new Date() },
+        data: {
+          status: InvitationStatus.ACCEPTED,
+          acceptedAt: new Date(),
+          acceptedById: user.id,
+        },
       });
 
       await tx.emailVerificationToken.create({
         data: {
-          userId: user.id,
-          tokenHash: verifyHash,
+          email: user.email,
+          token: verifyToken,
           expiresAt: verifyExpiresAt,
         },
       });
     });
 
-    // 4) Enviar correo de confirmación
     await transporter.sendMail({
       from,
       to: email,
