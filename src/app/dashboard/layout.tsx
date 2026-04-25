@@ -25,6 +25,7 @@ export default async function DashboardLayout({
   const collaboratorItems = [
     { href: "/dashboard/publications", label: "Publications" },
     { href: "/dashboard/datasets", label: "Datasets" },
+    { href: "/dashboard/expression", label: "Expression" },
   ];
 
   const userItems = [
