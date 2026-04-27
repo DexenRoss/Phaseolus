@@ -8,7 +8,7 @@ type ExpressionLineChartProps = {
   view: ExpressionVisualizationResponse;
 };
 
-const linePalette = ["#0f766e", "#dc2626", "#2563eb", "#d97706", "#7c3aed", "#059669"];
+const linePalette = ["#059669", "#0891b2", "#7c3aed", "#dc2626", "#d97706", "#2563eb"];
 
 export default function ExpressionLineChart({ view }: ExpressionLineChartProps) {
   if (!view.lineChart || !view.lineView) {
@@ -27,16 +27,16 @@ export default function ExpressionLineChart({ view }: ExpressionLineChartProps) 
     legend: {
       top: 20,
       textStyle: {
-        color: "#334155",
+        color: "hsl(150, 10%, 25%)",
       },
     },
     tooltip: {
       trigger: "axis",
       backgroundColor: "#ffffff",
-      borderColor: "#cbd5e1",
+      borderColor: "hsl(150, 12%, 88%)",
       borderWidth: 1,
       textStyle: {
-        color: "#0f172a",
+        color: "hsl(150, 10%, 10%)",
       },
       formatter: (params) => {
         const entries = Array.isArray(params) ? params : [params];
@@ -85,12 +85,12 @@ export default function ExpressionLineChart({ view }: ExpressionLineChartProps) 
       boundaryGap: false,
       data: view.lineChart.series[0]?.points.map((point) => point.sampleLabel) ?? [],
       axisLabel: {
-        color: "#475569",
+        color: "hsl(150, 8%, 42%)",
         rotate: 20,
       },
       axisLine: {
         lineStyle: {
-          color: "#94a3b8",
+          color: "hsl(150, 12%, 70%)",
         },
       },
     },
@@ -98,14 +98,14 @@ export default function ExpressionLineChart({ view }: ExpressionLineChartProps) 
       type: "value",
       name: view.lineChart.yAxisLabel,
       nameTextStyle: {
-        color: "#475569",
+        color: "hsl(150, 8%, 42%)",
       },
       axisLabel: {
-        color: "#475569",
+        color: "hsl(150, 8%, 42%)",
       },
       splitLine: {
         lineStyle: {
-          color: "#e2e8f0",
+          color: "hsl(150, 12%, 92%)",
         },
       },
     },

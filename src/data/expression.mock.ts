@@ -6,9 +6,9 @@ import type {
 export const expressionColorScales: ExpressionColorScaleOption[] = [
   {
     id: "viridis",
-    label: "Viridis",
-    description: "Balanceada para ver gradientes amplios con buen contraste.",
-    colors: ["#440154", "#3b528b", "#21918c", "#5ec962", "#fde725"],
+    label: "Phaseolus (Emerald)",
+    description: "Escala verde institucional de Phaseolus con excelente contraste.",
+    colors: ["#f0fdf4", "#86efac", "#22c55e", "#15803d", "#052e16"],
   },
   {
     id: "ember",

@@ -26,14 +26,17 @@ function getDatabaseConfig() {
 
 const databaseConfig = getDatabaseConfig();
 
-const adapter = new PrismaMariaDb({
-  ...databaseConfig,
-  allowPublicKeyRetrieval: true,
-});
-
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
+  adapter: PrismaMariaDb | undefined;
 };
+
+const adapter =
+  globalForPrisma.adapter ??
+  new PrismaMariaDb({
+    ...databaseConfig,
+    allowPublicKeyRetrieval: true,
+  });
 
 export const prisma =
   globalForPrisma.prisma ??
@@ -44,4 +47,5 @@ export const prisma =
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
+  globalForPrisma.adapter = adapter;
 }

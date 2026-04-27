@@ -11,7 +11,7 @@ export default async function DashboardPage() {
             margin: 0,
             fontSize: "32px",
             fontWeight: 800,
-            color: "#0f172a",
+            color: "hsl(150, 10%, 10%)",
           }}
         >
           Overview
@@ -37,7 +37,7 @@ export default async function DashboardPage() {
           }}
         >
           <h2 style={{ marginTop: 0, fontSize: "18px" }}>Sesión</h2>
-          <p style={{ marginBottom: 0, color: "#475569" }}>
+          <p style={{ marginBottom: 0, color: "hsl(150, 8%, 42%)" }}>
             Usuario autenticado: {session?.email}
           </p>
         </div>
@@ -51,7 +51,7 @@ export default async function DashboardPage() {
           }}
         >
           <h2 style={{ marginTop: 0, fontSize: "18px" }}>Rol</h2>
-          <p style={{ marginBottom: 0, color: "#475569" }}>
+          <p style={{ marginBottom: 0, color: "hsl(150, 8%, 42%)" }}>
             Nivel actual: {session?.role}
           </p>
         </div>
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
           }}
         >
           <h2 style={{ marginTop: 0, fontSize: "18px" }}>Estado</h2>
-          <p style={{ marginBottom: 0, color: "#475569" }}>
+          <p style={{ marginBottom: 0, color: "hsl(150, 8%, 42%)" }}>
             Base del sistema operando correctamente.
           </p>
         </div>

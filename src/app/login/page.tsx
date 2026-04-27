@@ -210,7 +210,7 @@ function HelixBackground() {
     <>
       <div className="pointer-events-none absolute right-0 top-16 h-[320px] w-[460px] opacity-[0.18]">
         <svg viewBox="0 0 460 320" className="h-full w-full" aria-hidden="true">
-          <g stroke="#94a3b8" strokeWidth="1.2" fill="none">
+          <g stroke="#86efac" strokeWidth="1.2" fill="none">
             {Array.from({ length: 8 }).map((_, index) => {
               const x = 35 + index * 52;
               const y = 150 - Math.sin(index * 0.62) * 72;
@@ -230,7 +230,7 @@ function HelixBackground() {
 
       <div className="pointer-events-none absolute bottom-0 left-0 h-[330px] w-[500px] opacity-[0.18]">
         <svg viewBox="0 0 500 330" className="h-full w-full" aria-hidden="true">
-          <g stroke="#94a3b8" strokeWidth="1.2" fill="none">
+          <g stroke="#86efac" strokeWidth="1.2" fill="none">
             {Array.from({ length: 8 }).map((_, index) => {
               const x = 45 + index * 55;
               const y = 190 - Math.sin(index * 0.58) * 76;

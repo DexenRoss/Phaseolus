@@ -23,9 +23,9 @@ const inputStyle: React.CSSProperties = {
   width: "100%",
   padding: "12px 14px",
   borderRadius: "12px",
-  border: "1px solid #cbd5e1",
+  border: "1px solid hsl(150 12% 88%)",
   fontSize: "14px",
-  color: "#0f172a",
+  color: "hsl(150 10% 10%)",
   background: "#ffffff",
 };
 
@@ -50,7 +50,7 @@ export default function ExpressionControls({
       }}
     >
       <label style={{ display: "grid", gap: "8px" }}>
-        <span style={{ fontSize: "14px", fontWeight: 700, color: "#334155" }}>
+        <span style={{ fontSize: "14px", fontWeight: 700, color: "hsl(150 10% 25%)" }}>
           Dataset
         </span>
         <select
@@ -69,7 +69,7 @@ export default function ExpressionControls({
       </label>
 
       <label style={{ display: "grid", gap: "8px" }}>
-        <span style={{ fontSize: "14px", fontWeight: 700, color: "#334155" }}>
+        <span style={{ fontSize: "14px", fontWeight: 700, color: "hsl(150 10% 25%)" }}>
           Line view
         </span>
         <select
@@ -89,7 +89,7 @@ export default function ExpressionControls({
       </label>
 
       <label style={{ display: "grid", gap: "8px" }}>
-        <span style={{ fontSize: "14px", fontWeight: 700, color: "#334155" }}>
+        <span style={{ fontSize: "14px", fontWeight: 700, color: "hsl(150 10% 25%)" }}>
           Heatmap color scale
         </span>
         <select

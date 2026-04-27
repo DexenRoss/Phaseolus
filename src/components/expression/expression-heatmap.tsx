@@ -24,10 +24,10 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
     tooltip: {
       position: "top",
       backgroundColor: "#ffffff",
-      borderColor: "#cbd5e1",
+      borderColor: "hsl(150, 12%, 88%)",
       borderWidth: 1,
       textStyle: {
-        color: "#0f172a",
+        color: "hsl(150, 10%, 10%)",
       },
       formatter: (params) => {
         const entry = Array.isArray(params) ? params[0] : params;
@@ -67,12 +67,12 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
         show: true,
       },
       axisLabel: {
-        color: "#475569",
+        color: "hsl(150, 8%, 42%)",
         rotate: 20,
       },
       axisLine: {
         lineStyle: {
-          color: "#94a3b8",
+          color: "hsl(150, 12%, 70%)",
         },
       },
     },
@@ -83,11 +83,11 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
         show: true,
       },
       axisLabel: {
-        color: "#475569",
+        color: "hsl(150, 8%, 42%)",
       },
       axisLine: {
         lineStyle: {
-          color: "#94a3b8",
+          color: "hsl(150, 12%, 70%)",
         },
       },
     },
@@ -100,7 +100,7 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
       calculable: true,
       text: ["Higher", "Lower"],
       textStyle: {
-        color: "#334155",
+        color: "hsl(150, 10%, 25%)",
       },
       inRange: {
         color: view.colorScale.colors,
@@ -126,12 +126,12 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
             const cell = data as { value: [number, number, number] };
             return cell.value[2].toFixed(1);
           },
-          color: "#0f172a",
+          color: "hsl(150, 10%, 10%)",
           fontSize: 11,
         },
         emphasis: {
           itemStyle: {
-            borderColor: "#0f172a",
+            borderColor: "hsl(150, 10%, 10%)",
             borderWidth: 1,
           },
         },

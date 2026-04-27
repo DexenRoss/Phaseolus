@@ -16,22 +16,22 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
-  const baseNavItems = [{ href: "/dashboard", label: "Overview" }];
+  const baseNavItems = [{ href: "/dashboard", label: "Overview", icon: "grid" }];
 
   const adminItems = [
-    { href: "/dashboard/users", label: "Users" },
-    { href: "/dashboard/invitations", label: "Invitations" },
-    { href: "/dashboard/audit", label: "Audit Log" },
+    { href: "/dashboard/users", label: "Users", icon: "users" },
+    { href: "/dashboard/invitations", label: "Invitations", icon: "mail" },
+    { href: "/dashboard/audit", label: "Audit Log", icon: "shield" },
   ];
 
   const collaboratorItems = [
-    { href: "/dashboard/publications", label: "Publications" },
-    { href: "/dashboard/datasets", label: "Datasets" },
-    { href: "/dashboard/expression", label: "Expression" },
+    { href: "/dashboard/publications", label: "Publications", icon: "file" },
+    { href: "/dashboard/datasets", label: "Datasets", icon: "database" },
+    { href: "/dashboard/expression", label: "Expression", icon: "chart" },
   ];
 
   const userItems = [
-    { href: "/dashboard/publications", label: "Publications" },
+    { href: "/dashboard/publications", label: "Publications", icon: "file" },
   ];
 
   let navItems = [...baseNavItems];
@@ -49,52 +49,86 @@ export default async function DashboardLayout({
       style={{
         minHeight: "100vh",
         display: "grid",
-        gridTemplateColumns: "260px 1fr",
-        background: "#f8fafc",
+        gridTemplateColumns: "280px 1fr",
+        background: "hsl(150 10% 97%)",
       }}
     >
       <aside
         style={{
-          background: "#0f172a",
+          background: "linear-gradient(180deg, #064E3B 0%, #065F46 40%, #047857 100%)",
           color: "#ffffff",
-          padding: "24px 20px",
+          padding: "28px 20px",
           display: "grid",
           gridTemplateRows: "auto 1fr auto",
-          gap: "24px",
+          gap: "28px",
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          overflowY: "auto",
         }}
       >
+        {/* Logo / Brand */}
         <div>
-          <h1
-            style={{
-              margin: 0,
-              fontSize: "24px",
-              fontWeight: 800,
-            }}
-          >
-            Phaseolus
-          </h1>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "6px" }}>
+            <div
+              style={{
+                height: "36px",
+                width: "36px",
+                borderRadius: "10px",
+                background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(8px)",
+                display: "grid",
+                placeItems: "center",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.12em",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
+            >
+              PV
+            </div>
+            <h1
+              style={{
+                margin: 0,
+                fontSize: "22px",
+                fontWeight: 800,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Phaseolus
+            </h1>
+          </div>
           <p
             style={{
-              marginTop: "8px",
-              color: "#cbd5e1",
-              fontSize: "14px",
+              marginTop: "4px",
+              color: "rgba(255,255,255,0.6)",
+              fontSize: "13px",
+              fontWeight: 400,
             }}
           >
-            Lab platform
+            Lab platform · UNAM
           </p>
         </div>
 
-        <nav style={{ display: "grid", gap: "10px", alignContent: "start" }}>
+        {/* Navigation */}
+        <nav style={{ display: "grid", gap: "6px", alignContent: "start" }}>
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               style={{
-                color: "#e2e8f0",
+                color: "rgba(255,255,255,0.85)",
                 textDecoration: "none",
-                padding: "10px 12px",
+                padding: "11px 14px",
                 borderRadius: "10px",
-                background: "rgba(255,255,255,0.04)",
+                background: "rgba(255,255,255,0.06)",
+                fontSize: "14px",
+                fontWeight: 500,
+                transition: "all 0.2s",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                border: "1px solid transparent",
               }}
             >
               {item.label}
@@ -102,20 +136,36 @@ export default async function DashboardLayout({
           ))}
         </nav>
 
+        {/* User info + logout */}
         <div
           style={{
             display: "grid",
-            gap: "12px",
-            paddingTop: "12px",
-            borderTop: "1px solid rgba(255,255,255,0.1)",
+            gap: "14px",
+            paddingTop: "14px",
+            borderTop: "1px solid rgba(255,255,255,0.12)",
           }}
         >
-          <div style={{ fontSize: "14px", color: "#cbd5e1" }}>
-            <div>
-              <strong>Email:</strong> {session.email}
+          <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>
+            <div style={{ marginBottom: "4px" }}>
+              <span style={{ fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>Email:</span>{" "}
+              {session.email}
             </div>
             <div>
-              <strong>Rol:</strong> {session.role}
+              <span style={{ fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>Rol:</span>{" "}
+              <span
+                style={{
+                  display: "inline-block",
+                  padding: "2px 8px",
+                  borderRadius: "6px",
+                  background: "rgba(255,255,255,0.12)",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                  color: "#86efac",
+                }}
+              >
+                {session.role}
+              </span>
             </div>
           </div>
 
@@ -126,6 +176,7 @@ export default async function DashboardLayout({
       <main
         style={{
           padding: "32px",
+          minHeight: "100vh",
         }}
       >
         {children}

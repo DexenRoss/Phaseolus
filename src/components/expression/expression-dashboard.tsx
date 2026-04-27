@@ -39,14 +39,15 @@ function StatusCard({
         background: "#ffffff",
         borderRadius: "16px",
         padding: "24px",
-        boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+        border: "1px solid hsl(150 12% 88%)",
         display: "grid",
         gap: "12px",
       }}
     >
       <div>
-        <h3 style={{ margin: 0, fontSize: "20px", color: "#0f172a" }}>{title}</h3>
-        <p style={{ margin: "8px 0 0", color: "#475569" }}>{description}</p>
+        <h3 style={{ margin: 0, fontSize: "20px", color: "hsl(150 10% 10%)" }}>{title}</h3>
+        <p style={{ margin: "8px 0 0", color: "hsl(150 8% 42%)" }}>{description}</p>
       </div>
 
       {action}
@@ -69,14 +70,15 @@ function ChartCard({
         background: "#ffffff",
         borderRadius: "16px",
         padding: "24px",
-        boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+        border: "1px solid hsl(150 12% 88%)",
         display: "grid",
         gap: "20px",
       }}
     >
       <div>
-        <h2 style={{ margin: 0, fontSize: "22px", color: "#0f172a" }}>{title}</h2>
-        <p style={{ margin: "8px 0 0", color: "#475569" }}>{description}</p>
+        <h2 style={{ margin: 0, fontSize: "22px", color: "hsl(150 10% 10%)" }}>{title}</h2>
+        <p style={{ margin: "8px 0 0", color: "hsl(150 8% 42%)" }}>{description}</p>
       </div>
 
       {children}
@@ -160,12 +162,12 @@ export default function ExpressionDashboard({
             margin: 0,
             fontSize: "32px",
             fontWeight: 800,
-            color: "#0f172a",
+            color: "hsl(150 10% 10%)",
           }}
         >
           Expression Charts
         </h1>
-        <p style={{ color: "#475569", marginTop: "8px", maxWidth: "880px" }}>
+        <p style={{ color: "hsl(150 8% 42%)", marginTop: "8px", maxWidth: "880px" }}>
           Explora perfiles de expresión con datasets mock coherentes para pruebas del dashboard.
           La capa de servicio ya separa dataset, vistas de línea y heatmap para conectar más
           adelante matrices reales del laboratorio.
@@ -177,7 +179,8 @@ export default function ExpressionDashboard({
           background: "#ffffff",
           borderRadius: "16px",
           padding: "24px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+          border: "1px solid hsl(150 12% 88%)",
           display: "grid",
           gap: "20px",
         }}
@@ -211,12 +214,12 @@ export default function ExpressionDashboard({
             style={{
               padding: "18px",
               borderRadius: "14px",
-              background: "#f8fafc",
-              border: "1px solid #e2e8f0",
+              background: "hsl(149 40% 97%)",
+              border: "1px solid hsl(150 12% 88%)",
             }}
           >
-            <div style={{ fontSize: "13px", color: "#64748b" }}>Dataset</div>
-            <div style={{ marginTop: "8px", fontWeight: 700, color: "#0f172a" }}>
+            <div style={{ fontSize: "13px", color: "hsl(150 8% 42%)" }}>Dataset</div>
+            <div style={{ marginTop: "8px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
               {currentDataset.name}
             </div>
           </div>
@@ -225,12 +228,12 @@ export default function ExpressionDashboard({
             style={{
               padding: "18px",
               borderRadius: "14px",
-              background: "#f8fafc",
-              border: "1px solid #e2e8f0",
+              background: "hsl(149 40% 97%)",
+              border: "1px solid hsl(150 12% 88%)",
             }}
           >
-            <div style={{ fontSize: "13px", color: "#64748b" }}>Features × samples</div>
-            <div style={{ marginTop: "8px", fontWeight: 700, color: "#0f172a" }}>
+            <div style={{ fontSize: "13px", color: "hsl(150 8% 42%)" }}>Features × samples</div>
+            <div style={{ marginTop: "8px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
               {currentDataset.featureCount} × {currentDataset.sampleCount}
             </div>
           </div>
@@ -239,12 +242,12 @@ export default function ExpressionDashboard({
             style={{
               padding: "18px",
               borderRadius: "14px",
-              background: "#f8fafc",
-              border: "1px solid #e2e8f0",
+              background: "hsl(149 40% 97%)",
+              border: "1px solid hsl(150 12% 88%)",
             }}
           >
-            <div style={{ fontSize: "13px", color: "#64748b" }}>Quantification</div>
-            <div style={{ marginTop: "8px", fontWeight: 700, color: "#0f172a" }}>
+            <div style={{ fontSize: "13px", color: "hsl(150 8% 42%)" }}>Quantification</div>
+            <div style={{ marginTop: "8px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
               {currentDataset.measurement}
             </div>
           </div>
@@ -253,12 +256,12 @@ export default function ExpressionDashboard({
             style={{
               padding: "18px",
               borderRadius: "14px",
-              background: "#f8fafc",
-              border: "1px solid #e2e8f0",
+              background: "hsl(149 40% 97%)",
+              border: "1px solid hsl(150 12% 88%)",
             }}
           >
-            <div style={{ fontSize: "13px", color: "#64748b" }}>Normalization</div>
-            <div style={{ marginTop: "8px", fontWeight: 700, color: "#0f172a" }}>
+            <div style={{ fontSize: "13px", color: "hsl(150 8% 42%)" }}>Normalization</div>
+            <div style={{ marginTop: "8px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
               {currentDataset.normalization}
             </div>
           </div>
@@ -269,9 +272,9 @@ export default function ExpressionDashboard({
             style={{
               padding: "18px",
               borderRadius: "14px",
-              background: "#eff6ff",
-              border: "1px solid #bfdbfe",
-              color: "#1e3a8a",
+              background: "hsl(149 40% 96%)",
+              border: "1px solid hsl(150 30% 82%)",
+              color: "hsl(152 50% 25%)",
             }}
           >
             <strong>{view.lineView.label}</strong>
@@ -303,9 +306,10 @@ export default function ExpressionDashboard({
                 padding: "10px 14px",
                 borderRadius: "10px",
                 border: "none",
-                background: "#0f172a",
+                background: "hsl(152 68% 36%)",
                 color: "#ffffff",
                 cursor: "pointer",
+                fontWeight: 600,
               }}
             >
               Retry
