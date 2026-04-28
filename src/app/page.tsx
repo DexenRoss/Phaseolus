@@ -1,11 +1,14 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 import ScrollFrames from "../components/ScrollFrames";
 
 export default function Home() {
+  const [videoVersion, setVideoVersion] = useState<1 | 2>(1);
   return (
     <div className="min-h-screen relative">
       {/* Scroll-driven seedling animation — THE PROTAGONIST */}
-      <ScrollFrames frameCount={60} />
+      <ScrollFrames frameCount={60} videoVersion={videoVersion} />
 
       {/* ─── Navigation Header ─── */}
       <header className="sticky top-0 z-30 flex items-center justify-between px-8 py-4 glass-light">
@@ -371,6 +374,24 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* ─── Video Toggle FAB ─── */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <button
+          onClick={() => setVideoVersion(v => v === 1 ? 2 : 1)}
+          className="flex items-center gap-2 rounded-full glass border border-white/20 px-4 py-2.5 shadow-xl hover:bg-white/10 transition-all duration-300 group"
+          title="Cambiar versión del video de fondo"
+        >
+          <div className="flex items-center justify-center h-6 w-6 rounded-full bg-emerald-500/20 text-emerald-300">
+            <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-white/90">
+            Video {videoVersion}
+          </span>
+        </button>
+      </div>
     </div>
   );
 }

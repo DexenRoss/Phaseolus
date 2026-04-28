@@ -32,6 +32,7 @@ jobs:
           rm -rf src/app/api src/app/dashboard src/app/admin src/app/login src/app/register src/app/verify-email src/app/forbidden
           # Fix absolute paths for GitHub Pages sub-directory
           sed -i 's/\/seedance_frames_webp/\/Phaseolus\/seedance_frames_webp/g' src/components/ScrollFrames.tsx
+          sed -i 's/\/seedance_frames_webp_v2/\/Phaseolus\/seedance_frames_webp_v2/g' src/components/ScrollFrames.tsx
           sed -i 's/\/unam-logo.svg/\/Phaseolus\/unam-logo.svg/g' src/app/page.tsx src/app/graphs/page.tsx
       - name: Build with Next.js
         run: npm run build

@@ -1,17 +1,19 @@
 "use client";
 import React, { useEffect, useMemo, useRef } from "react";
 
-export default function ScrollFrames({ frameCount = 60 }: { frameCount?: number }) {
+export default function ScrollFrames({ frameCount = 60, videoVersion = 1 }: { frameCount?: number; videoVersion?: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const loadedFrames = useRef<HTMLImageElement[]>([]);
   const lastDrawn = useRef(-1);
 
   const framePaths = useMemo(
-    () =>
-      Array.from({ length: frameCount }, (_, i) =>
-        `/seedance_frames_webp/frame_${String(i + 1).padStart(2, "0")}.webp`
-      ),
-    [frameCount]
+    () => {
+      const folder = videoVersion === 2 ? 'seedance_frames_webp_v2' : 'seedance_frames_webp';
+      return Array.from({ length: frameCount }, (_, i) =>
+        `/${folder}/frame_${String(i + 1).padStart(2, "0")}.webp`
+      );
+    },
+    [frameCount, videoVersion]
   );
 
   useEffect(() => {
