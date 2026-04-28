@@ -9,7 +9,7 @@ export default function ScrollFrames({ frameCount = 60 }: { frameCount?: number 
   const framePaths = useMemo(
     () =>
       Array.from({ length: frameCount }, (_, i) =>
-        `/seedance_frames/frame_${String(i + 1).padStart(2, "0")}.png`
+        `/seedance_frames_webp/frame_${String(i + 1).padStart(2, "0")}.webp`
       ),
     [frameCount]
   );

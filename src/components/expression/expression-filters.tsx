@@ -147,7 +147,7 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
           <textarea
             value={filters.geneList}
             onChange={(e) => updateFilter("geneList", e.target.value)}
-            placeholder="PHVUL_001G000100&#10;PHVUL_001G001200"
+            placeholder={"PHVUL_001G000100\nPHVUL_001G001200"}
             rows={4}
             style={{
               ...inputStyle,

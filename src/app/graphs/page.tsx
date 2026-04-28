@@ -142,7 +142,8 @@ const sampleHeatmapOption: EChartsOption = {
 
 export default function GraphsPage() {
   const [loading, setLoading] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Mobile overlay
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true); // Desktop sidebar
   const [tableData] = useState<DERow[]>([]);
   const lineChartRef = useRef<EChartHandle>(null);
   const heatmapRef = useRef<EChartHandle>(null);
@@ -155,6 +156,7 @@ export default function GraphsPage() {
     await new Promise((resolve) => setTimeout(resolve, 800));
     setLoading(false);
     setSidebarOpen(false);
+    setDesktopSidebarOpen(false);
   }, []);
 
   const downloadChart = (ref: React.RefObject<EChartHandle | null>, filename: string) => {
@@ -187,7 +189,7 @@ export default function GraphsPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "hsl(150 10% 97%)" }}>
+    <div style={{ minHeight: "100vh", background: "hsl(150 10% 97%)", overflowX: "hidden", maxWidth: "100vw", width: "100%" }}>
       {/* ─── Header ─── */}
       <header
         style={{
@@ -206,8 +208,9 @@ export default function GraphsPage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
+          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
             <div
+              className="desktop-logo"
               style={{
                 height: "32px",
                 width: "32px",
@@ -223,38 +226,70 @@ export default function GraphsPage() {
             >
               PV
             </div>
-            <span style={{ fontSize: "15px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
+            <span style={{ fontSize: "16px", fontWeight: 800, color: "hsl(150 10% 10%)", letterSpacing: "-0.02em" }}>
               Phaseolus
             </span>
           </Link>
+
           <span style={{ color: "hsl(150 12% 80%)", fontWeight: 300 }}>|</span>
-          <span style={{ fontSize: "13px", color: "hsl(150 8% 42%)", fontWeight: 500 }}>
+
+          <a href="https://www.unam.mx/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", transition: "opacity 0.2s" }} className="hover:opacity-80">
+            <img src="/unam-logo.svg" alt="UNAM" style={{ height: "32px", width: "auto" }} />
+          </a>
+
+          <span className="desktop-logo" style={{ color: "hsl(150 12% 80%)", fontWeight: 300 }}>|</span>
+          <span className="desktop-logo" style={{ fontSize: "13px", color: "hsl(150 8% 42%)", fontWeight: 500 }}>
             Gráficas de Expresión
           </span>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {/* Mobile sidebar toggle */}
+          {/* Desktop filter toggle */}
           <button
             type="button"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
+            onClick={() => setDesktopSidebarOpen(!desktopSidebarOpen)}
+            className="desktop-filter-btn"
             style={{
-              display: "none",
-              padding: "8px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "6px 12px",
               borderRadius: "8px",
               border: "1px solid hsl(150 12% 88%)",
-              background: "#fff",
+              background: desktopSidebarOpen ? "hsl(149 40% 96%)" : "#ffffff",
+              color: "hsl(150 10% 30%)",
+              fontSize: "13px",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+            </svg>
+            Filtros
+          </button>
+
+          {/* Mobile filter toggle */}
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            style={{
+              display: "none",
+              padding: "4px",
+              background: "transparent",
+              border: "none",
               cursor: "pointer",
             }}
             className="mobile-filter-btn"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="hsl(152 68% 36%)" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(150 10% 30%)" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
 
           <Link
             href="/login"
+            className="desktop-login"
             style={{
               fontSize: "13px",
               fontWeight: 600,
@@ -270,31 +305,36 @@ export default function GraphsPage() {
 
       {/* ─── Main Layout ─── */}
       <div
+        className="main-layout-grid"
         style={{
           display: "grid",
-          gridTemplateColumns: "320px 1fr",
+          gridTemplateColumns: desktopSidebarOpen ? "320px 1fr" : "1fr",
           minHeight: "calc(100vh - 57px)",
           gap: "0",
+          transition: "grid-template-columns 0.3s ease",
         }}
       >
         {/* ─── Sidebar ─── */}
-        <aside
-          style={{
-            padding: "20px",
-            borderRight: "1px solid hsl(150 12% 90%)",
-            background: "#ffffff",
-            overflowY: "auto",
-            maxHeight: "calc(100vh - 57px)",
-            position: "sticky",
-            top: "57px",
-          }}
-        >
-          <ExpressionFilters onGenerate={handleGenerate} loading={loading} />
-        </aside>
+        {desktopSidebarOpen && (
+          <aside
+            className="desktop-sidebar"
+            style={{
+              padding: "20px",
+              borderRight: "1px solid hsl(150 12% 90%)",
+              background: "#ffffff",
+              overflowY: "auto",
+              maxHeight: "calc(100vh - 57px)",
+              position: "sticky",
+              top: "57px",
+            }}
+          >
+            <ExpressionFilters onGenerate={handleGenerate} loading={loading} />
+          </aside>
+        )}
 
         {/* ─── Content ─── */}
         <main style={{ padding: "24px", overflowY: "auto" }}>
-          <div style={{ display: "grid", gap: "24px", maxWidth: "1200px" }}>
+          <div className="content-grid" style={{ display: "grid", gap: "24px", maxWidth: "1200px" }}>
             {/* Info banner */}
             <div
               style={{
@@ -319,16 +359,20 @@ export default function GraphsPage() {
 
             {/* ─── Line Chart ─── */}
             <div
+              className="chart-card"
               style={{
                 background: "#ffffff",
                 borderRadius: "16px",
                 padding: "24px",
                 boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
                 border: "1px solid hsl(150 12% 88%)",
+                width: "100%",
+                maxWidth: "100%",
+                overflow: "hidden",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-                <div>
+              <div className="chart-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+                <div className="chart-title">
                   <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
                     Perfil de Expresión
                   </h2>
@@ -338,6 +382,7 @@ export default function GraphsPage() {
                 </div>
                 <button
                   type="button"
+                  className="download-btn"
                   onClick={() => downloadChart(lineChartRef, "perfil_expresion.png")}
                   style={{
                     display: "inline-flex",
@@ -365,16 +410,20 @@ export default function GraphsPage() {
 
             {/* ─── Heatmap ─── */}
             <div
+              className="chart-card"
               style={{
                 background: "#ffffff",
                 borderRadius: "16px",
                 padding: "24px",
                 boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
                 border: "1px solid hsl(150 12% 88%)",
+                width: "100%",
+                maxWidth: "100%",
+                overflow: "hidden",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-                <div>
+              <div className="chart-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+                <div className="chart-title">
                   <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
                     Workflow / Heatmap
                   </h2>
@@ -384,6 +433,7 @@ export default function GraphsPage() {
                 </div>
                 <button
                   type="button"
+                  className="download-btn"
                   onClick={() => downloadChart(heatmapRef, "heatmap_expresion.png")}
                   style={{
                     display: "inline-flex",
@@ -418,59 +468,143 @@ export default function GraphsPage() {
       {/* ─── Mobile sidebar overlay ─── */}
       {sidebarOpen && (
         <div
+          className="mobile-overlay"
           style={{
             position: "fixed",
             inset: 0,
             zIndex: 50,
             display: "grid",
-            gridTemplateColumns: "320px 1fr",
+            gridTemplateColumns: "1fr",
           }}
         >
           <div
+            className="mobile-sidebar-content"
             style={{
-              background: "#ffffff",
+              background: "#f3fdf8",
               padding: "20px",
               overflowY: "auto",
               boxShadow: "4px 0 30px rgba(0,0,0,0.15)",
+              position: "relative",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
+            <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "16px" }}>
               <button
                 type="button"
                 onClick={() => setSidebarOpen(false)}
                 style={{
-                  padding: "6px",
-                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
                   border: "none",
-                  background: "hsl(150 10% 96%)",
+                  background: "hsl(152 68% 36%)",
                   cursor: "pointer",
+                  color: "#ffffff",
                 }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="hsl(150 10% 30%)" strokeWidth="2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
             <ExpressionFilters onGenerate={handleGenerate} loading={loading} />
           </div>
-          <div
-            onClick={() => setSidebarOpen(false)}
-            style={{ background: "rgba(0,0,0,0.3)", cursor: "pointer" }}
-          />
         </div>
       )}
 
+      {/* ─── Mobile FAB ─── */}
+      <button
+        className="mobile-fab"
+        onClick={() => setSidebarOpen(true)}
+        style={{
+          display: "none",
+          position: "fixed",
+          bottom: "24px",
+          right: "24px",
+          width: "56px",
+          height: "56px",
+          borderRadius: "50%",
+          background: "hsl(152 68% 36%)",
+          color: "white",
+          border: "none",
+          boxShadow: "0 4px 12px rgba(5, 150, 105, 0.4)",
+          cursor: "pointer",
+          zIndex: 45,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.89 1.14l-2.81.936a.375.375 0 01-.476-.476l.937-2.81a4.5 4.5 0 011.14-1.89L16.862 4.487z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 5.25l3.75 3.75" />
+        </svg>
+      </button>
+
+
       {/* Mobile-only styles */}
       <style>{`
+        .mobile-header-title {
+          display: none;
+        }
         @media (max-width: 768px) {
+          body, html {
+            overflow-x: hidden !important;
+            width: 100vw !important;
+            max-width: 100vw !important;
+          }
+          .main-layout-grid, .content-grid, .chart-card, main {
+            min-width: 0 !important;
+            width: 100% !important;
+            max-width: 100vw !important;
+            box-sizing: border-box !important;
+          }
+          .mobile-header-title {
+            display: inline-block;
+          }
+          .desktop-logo, .desktop-login {
+            display: none !important;
+          }
           .mobile-filter-btn {
             display: flex !important;
           }
-          div[style*="grid-template-columns: 320px 1fr"] {
-            grid-template-columns: 1fr !important;
+          .mobile-fab {
+            display: flex !important;
           }
-          div[style*="grid-template-columns: 320px 1fr"] > aside {
+          .desktop-filter-btn {
             display: none !important;
+          }
+          .main-layout-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+          .desktop-sidebar {
+            display: none !important;
+          }
+          main {
+            padding: 16px !important;
+            overflow-x: hidden;
+          }
+          .content-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+          .chart-card {
+            padding: 16px !important;
+            border-radius: 12px !important;
+          }
+          .chart-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 16px;
+          }
+          .chart-title {
+            display: none;
+          }
+          .download-btn {
+            width: fit-content;
+            background: hsl(152 68% 36%) !important;
+            color: #ffffff !important;
+            border: none !important;
           }
         }
       `}</style>

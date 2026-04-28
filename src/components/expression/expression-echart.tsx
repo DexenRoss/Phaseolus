@@ -53,7 +53,11 @@ const ExpressionEChart = forwardRef<EChartHandle, ExpressionEChartProps>(
       };
     }, [option]);
 
-    return <div ref={containerRef} style={{ height: `${height}px`, width: "100%" }} />;
+    return (
+      <div style={{ position: "relative", width: "100%", height: `${height}px` }}>
+        <div ref={containerRef} style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0 }} />
+      </div>
+    );
   }
 );
 
