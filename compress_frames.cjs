@@ -16,10 +16,9 @@ async function compressAll() {
     const inputPath = path.join(framesDir, file);
     const outputPath = path.join(outDir, file.replace('.png', '.webp'));
     console.log(`Compressing ${file}...`);
-    // Resize to max width 1200, WebP format, 60% quality
+    // Convert to lossless WebP, keeping original size
     await sharp(inputPath)
-      .resize({ width: 1000, withoutEnlargement: true })
-      .webp({ quality: 60 })
+      .webp({ lossless: true })
       .toFile(outputPath);
   }
   console.log('Compression complete!');
