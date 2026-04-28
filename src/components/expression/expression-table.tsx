@@ -29,7 +29,7 @@ export default function ExpressionTable({ data, onDownload }: ExpressionTablePro
   return (
     <div
       style={{
-        background: "#ffffff",
+        background: "hsl(var(--card))",
         borderRadius: "16px",
         padding: "24px",
         boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
@@ -39,10 +39,10 @@ export default function ExpressionTable({ data, onDownload }: ExpressionTablePro
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
         <div>
-          <h3 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
+          <h3 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(var(--foreground))" }}>
             Expresión Diferencial
           </h3>
-          <p style={{ margin: "4px 0 0", fontSize: "13px", color: "hsl(150 8% 42%)" }}>
+          <p style={{ margin: "4px 0 0", fontSize: "13px", color: "hsl(var(--muted-foreground))" }}>
             Resultados filtrados · {rows.length} genes
           </p>
         </div>
@@ -56,8 +56,8 @@ export default function ExpressionTable({ data, onDownload }: ExpressionTablePro
             padding: "8px 14px",
             borderRadius: "10px",
             border: "1px solid hsl(150 12% 88%)",
-            background: "hsl(149 40% 96%)",
-            color: "hsl(152 68% 36%)",
+            background: "hsl(var(--secondary))",
+            color: "hsl(var(--primary))",
             fontSize: "13px",
             fontWeight: 600,
             cursor: "pointer",
@@ -83,8 +83,8 @@ export default function ExpressionTable({ data, onDownload }: ExpressionTablePro
           <thead>
             <tr
               style={{
-                background: "hsl(152 68% 36%)",
-                color: "#ffffff",
+                background: "hsl(var(--primary))",
+                color: "hsl(var(--card))",
               }}
             >
               <th style={{ padding: "12px 16px", textAlign: "left", fontWeight: 600, fontSize: "12px", letterSpacing: "0.03em" }}>
@@ -106,21 +106,21 @@ export default function ExpressionTable({ data, onDownload }: ExpressionTablePro
               <tr
                 key={row.geneId}
                 style={{
-                  background: i % 2 === 0 ? "#ffffff" : "hsl(149 40% 97%)",
+                  background: i % 2 === 0 ? "hsl(var(--card))" : "hsl(var(--secondary))",
                   borderBottom: "1px solid hsl(150 12% 92%)",
                   transition: "background 0.15s",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "hsl(149 40% 94%)";
+                  (e.currentTarget as HTMLElement).style.background = "hsl(var(--muted))";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = i % 2 === 0 ? "#ffffff" : "hsl(149 40% 97%)";
+                  (e.currentTarget as HTMLElement).style.background = i % 2 === 0 ? "hsl(var(--card))" : "hsl(var(--secondary))";
                 }}
               >
-                <td style={{ padding: "10px 16px", fontFamily: "'Inter', monospace", fontWeight: 500, color: "hsl(150 10% 10%)" }}>
+                <td style={{ padding: "10px 16px", fontFamily: "'Inter', monospace", fontWeight: 500, color: "hsl(var(--foreground))" }}>
                   {row.geneId}
                 </td>
-                <td style={{ padding: "10px 16px", color: "hsl(150 10% 25%)" }}>
+                <td style={{ padding: "10px 16px", color: "hsl(var(--foreground))" }}>
                   {row.symbol}
                 </td>
                 <td
@@ -134,7 +134,7 @@ export default function ExpressionTable({ data, onDownload }: ExpressionTablePro
                 >
                   {row.lfc >= 0 ? "+" : ""}{row.lfc.toFixed(2)}
                 </td>
-                <td style={{ padding: "10px 16px", textAlign: "right", fontFamily: "'Inter', monospace", color: "hsl(150 8% 42%)" }}>
+                <td style={{ padding: "10px 16px", textAlign: "right", fontFamily: "'Inter', monospace", color: "hsl(var(--muted-foreground))" }}>
                   {row.pValue.toFixed(4)}
                 </td>
               </tr>

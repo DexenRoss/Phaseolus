@@ -27,16 +27,16 @@ export default function ExpressionLineChart({ view }: ExpressionLineChartProps) 
     legend: {
       top: 20,
       textStyle: {
-        color: "hsl(150, 10%, 25%)",
+        color: "hsl(var(--foreground))",
       },
     },
     tooltip: {
       trigger: "axis",
-      backgroundColor: "#ffffff",
-      borderColor: "hsl(150, 12%, 88%)",
+      backgroundColor: "hsl(var(--card))",
+      borderColor: "hsl(var(--border))",
       borderWidth: 1,
       textStyle: {
-        color: "hsl(150, 10%, 10%)",
+        color: "hsl(var(--foreground))",
       },
       formatter: (params) => {
         const entries = Array.isArray(params) ? params : [params];
@@ -85,12 +85,12 @@ export default function ExpressionLineChart({ view }: ExpressionLineChartProps) 
       boundaryGap: false,
       data: view.lineChart.series[0]?.points.map((point) => point.sampleLabel) ?? [],
       axisLabel: {
-        color: "hsl(150, 8%, 42%)",
+        color: "hsl(var(--muted-foreground))",
         rotate: 20,
       },
       axisLine: {
         lineStyle: {
-          color: "hsl(150, 12%, 70%)",
+          color: "hsl(var(--muted))",
         },
       },
     },
@@ -98,14 +98,14 @@ export default function ExpressionLineChart({ view }: ExpressionLineChartProps) 
       type: "value",
       name: view.lineChart.yAxisLabel,
       nameTextStyle: {
-        color: "hsl(150, 8%, 42%)",
+        color: "hsl(var(--muted-foreground))",
       },
       axisLabel: {
-        color: "hsl(150, 8%, 42%)",
+        color: "hsl(var(--muted-foreground))",
       },
       splitLine: {
         lineStyle: {
-          color: "hsl(150, 12%, 92%)",
+          color: "hsl(var(--border))",
         },
       },
     },

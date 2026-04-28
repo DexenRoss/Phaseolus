@@ -18,14 +18,14 @@ const sampleLineChartOption: EChartsOption = {
   grid: { left: 60, right: 24, top: 80, bottom: 60 },
   legend: {
     top: 16,
-    textStyle: { color: "#1a2e1a", fontFamily: "'Inter', sans-serif", fontSize: 12 },
+    textStyle: { color: "hsl(var(--foreground))", fontFamily: "'Inter', sans-serif", fontSize: 12 },
   },
   tooltip: {
     trigger: "axis",
-    backgroundColor: "#ffffff",
-    borderColor: "hsl(150 12% 88%)",
+    backgroundColor: "hsl(var(--card))",
+    borderColor: "hsl(var(--border))",
     borderWidth: 1,
-    textStyle: { color: "#1a2e1a", fontFamily: "'Inter', sans-serif" },
+    textStyle: { color: "hsl(var(--foreground))", fontFamily: "'Inter', sans-serif" },
   },
   xAxis: {
     type: "category",
@@ -33,15 +33,15 @@ const sampleLineChartOption: EChartsOption = {
     name: "Condición / Tiempo",
     nameLocation: "middle",
     nameGap: 40,
-    axisLabel: { color: "#4a6a4a", rotate: 15, fontFamily: "'Inter', sans-serif", fontSize: 11 },
-    axisLine: { lineStyle: { color: "#a8c4a8" } },
+    axisLabel: { color: "hsl(var(--muted-foreground))", rotate: 15, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+    axisLine: { lineStyle: { color: "hsl(var(--border))" } },
   },
   yAxis: {
     type: "value",
     name: "log2 TPM",
-    nameTextStyle: { color: "#4a6a4a", fontFamily: "'Inter', sans-serif" },
-    axisLabel: { color: "#4a6a4a", fontFamily: "'Inter', sans-serif" },
-    splitLine: { lineStyle: { color: "hsl(150 12% 92%)" } },
+    nameTextStyle: { color: "hsl(var(--muted-foreground))", fontFamily: "'Inter', sans-serif" },
+    axisLabel: { color: "hsl(var(--muted-foreground))", fontFamily: "'Inter', sans-serif" },
+    splitLine: { lineStyle: { color: "hsl(var(--border))" } },
   },
   series: [
     {
@@ -82,24 +82,24 @@ const sampleHeatmapOption: EChartsOption = {
   grid: { left: 100, right: 60, top: 24, bottom: 80 },
   tooltip: {
     position: "top",
-    backgroundColor: "#ffffff",
-    borderColor: "hsl(150 12% 88%)",
+    backgroundColor: "hsl(var(--card))",
+    borderColor: "hsl(var(--border))",
     borderWidth: 1,
-    textStyle: { color: "#1a2e1a", fontFamily: "'Inter', sans-serif" },
+    textStyle: { color: "hsl(var(--foreground))", fontFamily: "'Inter', sans-serif" },
   },
   xAxis: {
     type: "category",
     data: ["con 1", "con 2", "con 3", "con 4", "con 5", "con 6", "con 7"],
     splitArea: { show: true },
-    axisLabel: { color: "#4a6a4a", fontSize: 11, fontFamily: "'Inter', sans-serif" },
-    axisLine: { lineStyle: { color: "#a8c4a8" } },
+    axisLabel: { color: "hsl(var(--muted-foreground))", fontSize: 11, fontFamily: "'Inter', sans-serif" },
+    axisLine: { lineStyle: { color: "hsl(var(--border))" } },
   },
   yAxis: {
     type: "category",
     data: ["Gene PHVUL_01", "Gene PHVUL_02", "Gene PHVUL_03", "Gene PHVUL_04"],
     splitArea: { show: true },
-    axisLabel: { color: "#4a6a4a", fontSize: 11, fontFamily: "'Inter', sans-serif" },
-    axisLine: { lineStyle: { color: "#a8c4a8" } },
+    axisLabel: { color: "hsl(var(--muted-foreground))", fontSize: 11, fontFamily: "'Inter', sans-serif" },
+    axisLine: { lineStyle: { color: "hsl(var(--border))" } },
   },
   visualMap: {
     min: 0,
@@ -109,7 +109,7 @@ const sampleHeatmapOption: EChartsOption = {
     bottom: 8,
     calculable: true,
     text: ["Alta expresión", "Baja expresión"],
-    textStyle: { color: "#4a6a4a", fontFamily: "'Inter', sans-serif", fontSize: 11 },
+    textStyle: { color: "hsl(var(--muted-foreground))", fontFamily: "'Inter', sans-serif", fontSize: 11 },
     inRange: {
       color: ["#f0fdf4", "#86efac", "#22c55e", "#15803d", "#052e16"],
     },
@@ -130,7 +130,7 @@ const sampleHeatmapOption: EChartsOption = {
           const p = params as { data: number[] };
           return p.data?.[2]?.toFixed(1) ?? "";
         },
-        color: "#1a2e1a",
+        color: "hsl(var(--foreground))",
         fontSize: 10,
         fontFamily: "'Inter', sans-serif",
       },
@@ -190,7 +190,7 @@ export default function GraphsPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "hsl(150 10% 97%)", overflowX: "hidden", maxWidth: "100vw", width: "100%" }}>
+    <div style={{ minHeight: "100vh", background: "hsl(var(--background))", overflowX: "hidden", maxWidth: "100vw", width: "100%" }}>
       {/* ─── Header ─── */}
       <header
         style={{
@@ -201,7 +201,7 @@ export default function GraphsPage() {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "12px 24px",
-          background: "rgba(255,255,255,0.92)",
+          background: "hsl(var(--card))",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           borderBottom: "1px solid hsl(150 12% 90%)",
@@ -216,30 +216,30 @@ export default function GraphsPage() {
                 height: "32px",
                 width: "32px",
                 borderRadius: "8px",
-                background: "hsl(152 68% 36%)",
+                background: "hsl(var(--primary))",
                 display: "grid",
                 placeItems: "center",
                 fontSize: "10px",
                 fontWeight: 800,
                 letterSpacing: "0.1em",
-                color: "#ffffff",
+                color: "hsl(var(--card))",
               }}
             >
               PV
             </div>
-            <span style={{ fontSize: "16px", fontWeight: 800, color: "hsl(150 10% 10%)", letterSpacing: "-0.02em" }}>
+            <span style={{ fontSize: "16px", fontWeight: 800, color: "hsl(var(--foreground))", letterSpacing: "-0.02em" }}>
               Phaseolus
             </span>
           </Link>
 
-          <span style={{ color: "hsl(150 12% 80%)", fontWeight: 300 }}>|</span>
+          <span style={{ color: "hsl(var(--muted-foreground))", fontWeight: 300 }}>|</span>
 
           <a href="https://www.unam.mx/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", transition: "opacity 0.2s" }} className="hover:opacity-80">
             <img src="/unam-logo.svg" alt="UNAM" style={{ height: "32px", width: "auto" }} />
           </a>
 
-          <span className="desktop-logo" style={{ color: "hsl(150 12% 80%)", fontWeight: 300 }}>|</span>
-          <span className="desktop-logo" style={{ fontSize: "13px", color: "hsl(150 8% 42%)", fontWeight: 500 }}>
+          <span className="desktop-logo" style={{ color: "hsl(var(--muted-foreground))", fontWeight: 300 }}>|</span>
+          <span className="desktop-logo" style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))", fontWeight: 500 }}>
             Gráficas de Expresión
           </span>
         </div>
@@ -257,8 +257,8 @@ export default function GraphsPage() {
               padding: "6px 12px",
               borderRadius: "8px",
               border: "1px solid hsl(150 12% 88%)",
-              background: desktopSidebarOpen ? "hsl(149 40% 96%)" : "#ffffff",
-              color: "hsl(150 10% 30%)",
+              background: desktopSidebarOpen ? "hsl(var(--secondary))" : "hsl(var(--card))",
+              color: "hsl(var(--foreground))",
               fontSize: "13px",
               fontWeight: 600,
               cursor: "pointer",
@@ -283,7 +283,7 @@ export default function GraphsPage() {
             }}
             className="mobile-filter-btn"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(150 10% 30%)" strokeWidth="2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--foreground))" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
@@ -296,7 +296,7 @@ export default function GraphsPage() {
             style={{
               fontSize: "13px",
               fontWeight: 600,
-              color: "hsl(152 68% 36%)",
+              color: "hsl(var(--primary))",
               textDecoration: "none",
               transition: "opacity 0.2s",
             }}
@@ -324,7 +324,7 @@ export default function GraphsPage() {
             style={{
               padding: "20px",
               borderRight: "1px solid hsl(150 12% 90%)",
-              background: "#ffffff",
+              background: "hsl(var(--card))",
               overflowY: "auto",
               maxHeight: "calc(100vh - 57px)",
               position: "sticky",
@@ -346,13 +346,13 @@ export default function GraphsPage() {
                 gap: "12px",
                 padding: "14px 20px",
                 borderRadius: "12px",
-                background: "hsl(149 40% 96%)",
+                background: "hsl(var(--secondary))",
                 border: "1px solid hsl(150 30% 88%)",
                 fontSize: "13px",
-                color: "hsl(150 10% 25%)",
+                color: "hsl(var(--foreground))",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(152 68% 36%)" strokeWidth="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
               </svg>
               <span>
@@ -364,7 +364,7 @@ export default function GraphsPage() {
             <div
               className="chart-card"
               style={{
-                background: "#ffffff",
+                background: "hsl(var(--card))",
                 borderRadius: "16px",
                 padding: "24px",
                 boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
@@ -376,10 +376,10 @@ export default function GraphsPage() {
             >
               <div className="chart-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
                 <div className="chart-title">
-                  <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
+                  <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(var(--foreground))" }}>
                     Perfil de Expresión
                   </h2>
-                  <p style={{ margin: "4px 0 0", fontSize: "13px", color: "hsl(150 8% 42%)" }}>
+                  <p style={{ margin: "4px 0 0", fontSize: "13px", color: "hsl(var(--muted-foreground))" }}>
                     Serie comparativa por condiciones o tiempos
                   </p>
                 </div>
@@ -394,8 +394,8 @@ export default function GraphsPage() {
                     padding: "8px 14px",
                     borderRadius: "10px",
                     border: "1px solid hsl(150 12% 88%)",
-                    background: "hsl(149 40% 96%)",
-                    color: "hsl(152 68% 36%)",
+                    background: "hsl(var(--secondary))",
+                    color: "hsl(var(--primary))",
                     fontSize: "13px",
                     fontWeight: 600,
                     cursor: "pointer",
@@ -415,7 +415,7 @@ export default function GraphsPage() {
             <div
               className="chart-card"
               style={{
-                background: "#ffffff",
+                background: "hsl(var(--card))",
                 borderRadius: "16px",
                 padding: "24px",
                 boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
@@ -427,10 +427,10 @@ export default function GraphsPage() {
             >
               <div className="chart-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
                 <div className="chart-title">
-                  <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(150 10% 10%)" }}>
+                  <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "hsl(var(--foreground))" }}>
                     Workflow / Heatmap
                   </h2>
-                  <p style={{ margin: "4px 0 0", fontSize: "13px", color: "hsl(150 8% 42%)" }}>
+                  <p style={{ margin: "4px 0 0", fontSize: "13px", color: "hsl(var(--muted-foreground))" }}>
                     Matriz completa de expresión con escala de color verde Phaseolus
                   </p>
                 </div>
@@ -445,8 +445,8 @@ export default function GraphsPage() {
                     padding: "8px 14px",
                     borderRadius: "10px",
                     border: "1px solid hsl(150 12% 88%)",
-                    background: "hsl(149 40% 96%)",
-                    color: "hsl(152 68% 36%)",
+                    background: "hsl(var(--secondary))",
+                    color: "hsl(var(--primary))",
                     fontSize: "13px",
                     fontWeight: 600,
                     cursor: "pointer",
@@ -483,7 +483,7 @@ export default function GraphsPage() {
           <div
             className="mobile-sidebar-content"
             style={{
-              background: "#f3fdf8",
+              background: "hsl(var(--background))",
               padding: "20px",
               overflowY: "auto",
               boxShadow: "4px 0 30px rgba(0,0,0,0.15)",
@@ -502,9 +502,9 @@ export default function GraphsPage() {
                   height: "32px",
                   borderRadius: "50%",
                   border: "none",
-                  background: "hsl(152 68% 36%)",
+                  background: "hsl(var(--primary))",
                   cursor: "pointer",
-                  color: "#ffffff",
+                  color: "hsl(var(--card))",
                 }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -529,7 +529,7 @@ export default function GraphsPage() {
           width: "56px",
           height: "56px",
           borderRadius: "50%",
-          background: "hsl(152 68% 36%)",
+          background: "hsl(var(--primary))",
           color: "white",
           border: "none",
           boxShadow: "0 4px 12px rgba(5, 150, 105, 0.4)",

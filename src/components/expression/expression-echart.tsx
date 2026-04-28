@@ -34,21 +34,43 @@ const ExpressionEChart = forwardRef<EChartHandle, ExpressionEChartProps>(
         return;
       }
 
-      const chart =
-        echarts.getInstanceByDom(containerRef.current) ?? echarts.init(containerRef.current);
+      const getIsDark = () => document.documentElement.classList.contains("dark");
+
+      let chart = echarts.getInstanceByDom(containerRef.current);
+      if (!chart) {
+        // Init with dark or light theme to ensure tooltips and text defaults are correct
+        chart = echarts.init(containerRef.current, getIsDark() ? "dark" : undefined);
+      }
 
       chartRef.current = chart;
-      chart.setOption(option, true);
+      // Overwrite background to transparent so it uses our CSS background
+      const currentOption = { ...option, backgroundColor: "transparent" };
+      chart.setOption(currentOption, true);
 
       const resizeObserver = new ResizeObserver(() => {
-        chart.resize();
+        chart?.resize();
       });
 
       resizeObserver.observe(containerRef.current);
 
+      const themeObserver = new MutationObserver(() => {
+        const isDarkNow = getIsDark();
+        if (chart) {
+          chart.dispose();
+          chart = echarts.init(containerRef.current, isDarkNow ? "dark" : undefined);
+          chartRef.current = chart;
+          chart.setOption({ ...option, backgroundColor: "transparent" }, true);
+        }
+      });
+
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
       return () => {
         resizeObserver.disconnect();
-        chart.dispose();
+        themeObserver.disconnect();
+        if (chart) {
+          chart.dispose();
+        }
         chartRef.current = null;
       };
     }, [option]);

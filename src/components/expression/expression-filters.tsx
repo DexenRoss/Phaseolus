@@ -25,8 +25,8 @@ const selectStyle: React.CSSProperties = {
   borderRadius: "10px",
   border: "1px solid hsl(150 12% 88%)",
   fontSize: "13px",
-  color: "hsl(150 10% 10%)",
-  background: "#ffffff",
+  color: "hsl(var(--foreground))",
+  background: "hsl(var(--card))",
   outline: "none",
   transition: "border-color 0.2s",
 };
@@ -38,7 +38,7 @@ const inputStyle: React.CSSProperties = {
 const labelStyle: React.CSSProperties = {
   fontSize: "12px",
   fontWeight: 600,
-  color: "hsl(150 8% 42%)",
+  color: "hsl(var(--muted-foreground))",
   marginBottom: "4px",
   display: "block",
 };
@@ -66,7 +66,7 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
         display: "grid",
         gap: "24px",
         padding: "24px",
-        background: "#ffffff",
+        background: "hsl(var(--card))",
         borderRadius: "16px",
         border: "1px solid hsl(150 12% 88%)",
         boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
@@ -79,7 +79,7 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
             height: "28px",
             width: "28px",
             borderRadius: "8px",
-            background: "hsl(152 68% 36%)",
+            background: "hsl(var(--primary))",
             display: "grid",
             placeItems: "center",
           }}
@@ -88,14 +88,14 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
           </svg>
         </div>
-        <span style={{ fontWeight: 700, fontSize: "15px", color: "hsl(152 68% 36%)", letterSpacing: "0.05em" }}>
+        <span style={{ fontWeight: 700, fontSize: "15px", color: "hsl(var(--primary))", letterSpacing: "0.05em" }}>
           FILTROS
         </span>
       </div>
 
       {/* Datos Generales */}
       <div>
-        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(150 10% 10%)", marginBottom: "12px" }}>
+        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(var(--foreground))", marginBottom: "12px" }}>
           Datos Generales
         </h4>
         <label style={labelStyle}>
@@ -113,7 +113,7 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
 
       {/* Genes */}
       <div>
-        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(150 10% 10%)", marginBottom: "12px" }}>
+        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(var(--foreground))", marginBottom: "12px" }}>
           Genes
         </h4>
         <label style={{ ...labelStyle, marginBottom: "8px" }}>
@@ -121,23 +121,23 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
         </label>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "12px" }}>
-          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "hsl(150 10% 10%)", cursor: "pointer" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "hsl(var(--foreground))", cursor: "pointer" }}>
             <input
               type="radio"
               name="geneInputMode"
               checked={filters.geneInputMode === "list"}
               onChange={() => updateFilter("geneInputMode", "list")}
-              style={{ accentColor: "hsl(152 68% 36%)" }}
+              style={{ accentColor: "hsl(var(--primary))" }}
             />
             Escribir o pegar lista
           </label>
-          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "hsl(150 10% 10%)", cursor: "pointer" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "hsl(var(--foreground))", cursor: "pointer" }}>
             <input
               type="radio"
               name="geneInputMode"
               checked={filters.geneInputMode === "file"}
               onChange={() => updateFilter("geneInputMode", "file")}
-              style={{ accentColor: "hsl(152 68% 36%)" }}
+              style={{ accentColor: "hsl(var(--primary))" }}
             />
             Subir archivo
           </label>
@@ -164,7 +164,7 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
               borderRadius: "10px",
               padding: "16px",
               textAlign: "center",
-              color: "hsl(150 8% 42%)",
+              color: "hsl(var(--muted-foreground))",
               fontSize: "13px",
               cursor: "pointer",
               transition: "border-color 0.2s",
@@ -180,7 +180,7 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
 
       {/* Filtros estadísticos */}
       <div>
-        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(150 10% 10%)", marginBottom: "12px" }}>
+        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(var(--foreground))", marginBottom: "12px" }}>
           Filtros estadísticos
         </h4>
 
@@ -220,7 +220,7 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
 
       {/* Condiciones y tejidos */}
       <div>
-        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(150 10% 10%)", marginBottom: "12px" }}>
+        <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "hsl(var(--foreground))", marginBottom: "12px" }}>
           Condiciones y tejidos
         </h4>
 
@@ -280,8 +280,8 @@ export default function ExpressionFilters({ onGenerate, loading }: ExpressionFil
           padding: "12px",
           borderRadius: "12px",
           border: "none",
-          background: loading ? "hsl(150 8% 70%)" : "hsl(152 68% 36%)",
-          color: "#ffffff",
+          background: loading ? "hsl(var(--muted))" : "hsl(var(--primary))",
+          color: "hsl(var(--card))",
           fontSize: "14px",
           fontWeight: 700,
           cursor: loading ? "not-allowed" : "pointer",

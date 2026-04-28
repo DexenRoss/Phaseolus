@@ -23,11 +23,11 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
     },
     tooltip: {
       position: "top",
-      backgroundColor: "#ffffff",
-      borderColor: "hsl(150, 12%, 88%)",
+      backgroundColor: "hsl(var(--card))",
+      borderColor: "hsl(var(--border))",
       borderWidth: 1,
       textStyle: {
-        color: "hsl(150, 10%, 10%)",
+        color: "hsl(var(--foreground))",
       },
       formatter: (params) => {
         const entry = Array.isArray(params) ? params[0] : params;
@@ -67,12 +67,12 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
         show: true,
       },
       axisLabel: {
-        color: "hsl(150, 8%, 42%)",
+        color: "hsl(var(--muted-foreground))",
         rotate: 20,
       },
       axisLine: {
         lineStyle: {
-          color: "hsl(150, 12%, 70%)",
+          color: "hsl(var(--muted))",
         },
       },
     },
@@ -83,11 +83,11 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
         show: true,
       },
       axisLabel: {
-        color: "hsl(150, 8%, 42%)",
+        color: "hsl(var(--muted-foreground))",
       },
       axisLine: {
         lineStyle: {
-          color: "hsl(150, 12%, 70%)",
+          color: "hsl(var(--muted))",
         },
       },
     },
@@ -100,7 +100,7 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
       calculable: true,
       text: ["Higher", "Lower"],
       textStyle: {
-        color: "hsl(150, 10%, 25%)",
+        color: "hsl(var(--foreground))",
       },
       inRange: {
         color: view.colorScale.colors,
@@ -126,12 +126,12 @@ export default function ExpressionHeatmap({ view }: ExpressionHeatmapProps) {
             const cell = data as { value: [number, number, number] };
             return cell.value[2].toFixed(1);
           },
-          color: "hsl(150, 10%, 10%)",
+          color: "hsl(var(--foreground))",
           fontSize: 11,
         },
         emphasis: {
           itemStyle: {
-            borderColor: "hsl(150, 10%, 10%)",
+            borderColor: "hsl(var(--foreground))",
             borderWidth: 1,
           },
         },
