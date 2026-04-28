@@ -32,6 +32,7 @@ jobs:
           rm -rf src/app/api
           echo "export async function getCurrentSession() { return { userId: '1', role: 'admin', organizationId: '1', name: 'Demo User', email: 'demo@example.com' }; }" > src/lib/auth.ts
           rm -rf src/app/register/check-email
+          sed -i 's/export const dynamic = "force-dynamic";//' src/app/dashboard/layout.tsx
       - name: Build with Next.js
         run: npm run build
       - name: Upload artifact
