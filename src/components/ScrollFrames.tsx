@@ -8,9 +8,10 @@ export default function ScrollFrames({ frameCount = 60, videoVersion = 1 }: { fr
 
   const framePaths = useMemo(
     () => {
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
       const folder = videoVersion === 2 ? 'seedance_frames_webp_v2' : 'seedance_frames_webp';
       return Array.from({ length: frameCount }, (_, i) =>
-        `/${folder}/frame_${String(i + 1).padStart(2, "0")}.webp`
+        `${basePath}/${folder}/frame_${String(i + 1).padStart(2, "0")}.webp`
       );
     },
     [frameCount, videoVersion]
