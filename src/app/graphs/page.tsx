@@ -9,6 +9,7 @@ import type { DERow } from "@/components/expression/expression-table";
 import ExpressionEChart from "@/components/expression/expression-echart";
 import type { EChartHandle } from "@/components/expression/expression-echart";
 import type { EChartsOption } from "echarts";
+import ThemeToggle from "@/components/ThemeToggle";
 
 /* ─── Sample data for demonstration ─── */
 const sampleLineChartOption: EChartsOption = {
@@ -286,6 +287,8 @@ export default function GraphsPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
+
+          <ThemeToggle />
 
           <Link
             href="/login"

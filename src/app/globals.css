@@ -136,6 +136,17 @@
       0 10px 30px -5px rgba(0, 0, 0, 0.06);
   }
 
+  .dark .glass-light {
+    background: rgba(18, 24, 20, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .glass-card {
+    background: rgba(18, 24, 20, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   /* Text glow for readability on images */
   .text-glow {
     text-shadow:

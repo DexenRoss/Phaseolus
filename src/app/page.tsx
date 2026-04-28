@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import ScrollFrames from "../components/ScrollFrames";
+import ThemeToggle from "../components/ThemeToggle";
 
 export default function Home() {
   const [videoVersion, setVideoVersion] = useState<1 | 2>(1);
@@ -36,6 +37,7 @@ export default function Home() {
           >
             Gráficas
           </Link>
+          <ThemeToggle />
           <Link
             href="/login"
             className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90 shadow-sm"
