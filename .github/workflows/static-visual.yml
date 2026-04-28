@@ -29,10 +29,7 @@ jobs:
       - name: Make codebase static-compatible
         run: |
           sed -i 's/reactCompiler: true,/reactCompiler: true, output: "export", basePath: "\/Phaseolus", assetPrefix: "\/Phaseolus\/", images: { unoptimized: true },/' next.config.ts
-          rm -rf src/app/api
-          echo "export async function getCurrentSession() { return { userId: '1', role: 'admin', organizationId: '1', name: 'Demo User', email: 'demo@example.com' }; }" > src/lib/auth.ts
-          rm -rf src/app/register/check-email
-          sed -i 's/export const dynamic = "force-dynamic";//' src/app/dashboard/layout.tsx
+          rm -rf src/app/api src/app/dashboard src/app/admin src/app/login src/app/register src/app/verify-email src/app/forbidden
       - name: Build with Next.js
         run: npm run build
       - name: Upload artifact
